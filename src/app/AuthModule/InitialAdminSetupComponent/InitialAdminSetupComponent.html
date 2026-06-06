@@ -1,0 +1,28 @@
+<h2>初回セットアップ</h2>
+
+<form>
+
+  <label>名前</label>
+  <input type="name" [(ngModel)]="name" name="name">
+
+  <label>社員ID</label>
+  <input type="employeeId" [(ngModel)]="employeeId" name="employeeId">
+
+  <label>パスワード</label>
+  <input type="password" [(ngModel)]="password" name="password" (input)="checkPasswordMatch()">
+
+  <label>確認用パスワード</label>
+  <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" (input)="checkPasswordMatch()">
+
+  <button type="button" [disabled]="!isPasswordMatch" (click)="onsubmit()">
+    アカウント作成
+  </button>
+
+  <label for="login">すでにアカウントを持っている方はこちら</label>
+  <button type="button" name="login" id="login" (click)="onLogin()">
+    ログイン画面へ
+  </button>
+
+  <p *ngIf="!isPasswordMatch">パスワードが一致しません</p>
+
+</form>

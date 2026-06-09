@@ -1,0 +1,35 @@
+<div class="modal" *ngIf="isOpen">
+    <div class="modal-content">
+        <h2>保険料登録/編集<h2>
+        <p>※該当年月の情報/支給分を登録してください。</p>
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <label for="year-month">該当年月</label>
+            <input type="month" name="year-month">
+            
+            <label for="basicpay">基本給</label>
+            <input type="number" name="basicpay">
+
+            <label for="basicovertimepay">固定残業代</label>
+            <input type="number" name="basicovertimepay">
+
+            <label for="networkday">出勤日数</label>
+            <input type="number" name="networkday">
+        <!--一応17日以上が随時改定の区切りだが、それ以外の制度が見つかったとき用に二択にしなかった-->
+            <label for="incentivepay">歩合給</label>
+            <input type="number" name="incentivepay">
+
+            <label for="mobilityallowance">交通費支給（割賦当月分）</label>
+            <input type="number" name="mobilityallowance">
+
+            <label for="specialallowance">諸手当・現物給付・そのた定期給の月割り価値</label>
+            <input type="number" name="specialallowance">
+
+            <label for="bonus">賞与※年3度以下のもので、当月に支給した場合のみ</label>
+            <input type="number" name="bonus">
+        
+        <button type="submit">登録</button>
+        <button type="button" (click)="onClose()">キャンセル</button>
+        </form>
+    </div>
+</div>
+

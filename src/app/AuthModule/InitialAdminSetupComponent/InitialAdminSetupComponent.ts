@@ -35,7 +35,7 @@ export class InitialAdminSetupComponent{
         if (!this.isPasswordMatch){
             return;
         }
-        const user =await this.authService.registerAdmin(this.employeeId,this.password);
+        const user = await this.authService.registerAdmin(this.employeeId,this.password);
         await this.userService.createAdminUser(
         user.uid,
         this.name,

@@ -1,0 +1,60 @@
+<div class="modal" *ngIf="isOpen">
+    <div class="modal-content">
+        <h2>従業員編集<h2>
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+            
+            <label for="name">名前</label>
+            <input type="text" name="name" placeholder="名前" [value]="employee.name">
+
+            <label for="employeeId">従業員ID</label>
+            <p>{{employee.employeeId}}&ensp;(※変更不可)</p>
+
+            <label for="birthdate">生年月日</label>
+            <input type="date" name="birthdate" [value]="employee.birthdate">
+
+            <label for="joindate">入社日</label>
+            <input type="date" name="joindate" [value]="employee.joindate">
+
+            <label for="resigndate">退職予定日</label>
+            <input type="date" name="resigndate" [value]="employee.resigndate">
+
+            <label for="employmenttype">雇用形態</label>
+            <input type="select" name="employmenttype" [value]="employee.employmenttype">
+              <option value="permanent">正社員</option>
+              <option value="temporary">正社員でない要件充足者</option>
+              <option value="other">その他</option>
+            </select>
+
+            <label for="dependents">被扶養者（第三号被保険者）の該当</label>
+            <input type="select" name="dependents" [value]="employee.dependents">
+              <option value="yes">該当</option>
+              <option value="no">該当しない</option>
+            </select>""
+
+            <label for="sidejob">副業</label>
+            <input type="select" name="sidejob" [value]="employee.sidejob">
+              <option value="yes">有</option>
+              <option value="no">無</option>
+            </select>
+
+            <label for="sidejobincome">副業収入</label>
+            <input type="number" name="sidejobincome" [disabled]="sidejob === 'no'" [value]="employee.sidejobincome">
+
+            <label for="status">ステータス</label>
+            <input type="select" name="status" [value]="employee.status">
+              <option value="b-join">入社前</option>
+              <option value="active1">従事中</option>
+              <option value="active2">従事中（養育期間特例適用中）</option>
+              <option value="resigning">退職予定</option>
+              <option value="resigned">退職</option>
+              <option value="inactive">休職</option>
+              <option value="inactive1">特別休職(育休)</option>
+              <option value="inactive2">特別休職(産休)</option>
+              <option value="inactive3">特別休職(育休+産休)</option>
+            </select>
+
+            <button type="submit">編集完了</button>
+            <button type="button" (click)="onClose()">キャンセル</button>
+        </form>
+    </div>
+</div>

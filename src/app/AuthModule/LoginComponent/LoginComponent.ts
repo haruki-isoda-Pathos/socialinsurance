@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
 export class LoginComponent{
     employeeId:string = '';
     password:string = '';
-    error:string = '';
 
     constructor(
         private authService:AuthService,
@@ -28,10 +27,10 @@ export class LoginComponent{
            const firebaseUser =await this.authService.login(this.employeeId, this.password);
            const user = await this.userService.getUser(firebaseUser.uid);
            console.log(user);
-           this.router.navigate(['/admin']);
+           this.router.navigate(['/admin/employees']);
            }
         catch(error){
-            this.error = 'ログインに失敗しました'
+            alert('ログインに失敗しました。IDとパスワードを確認してください');
         }
     }
 

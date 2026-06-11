@@ -9,19 +9,7 @@ export class UserService {
 
     async createAdminUser(uid:string,name:string,employeeId:string){
         const userRef = doc(this.firestore, 'users', uid);
-        await setDoc(userRef, 
-            {
-             name,
-             employeeId,
-             role: 'admin',
-             createdAt: new Date(),
-            }
-        )
-    }
-
-    async createUser(uid:string,name:string,employeeId:string,role:string){
-        const userRef = doc(this.firestore, 'users', uid);
-        await setDoc(userRef, {name, employeeId, role, createdAt: new Date()});
+        await setDoc(userRef, {name, employeeId, role: 'admin', createdAt: new Date(),})
     }
 
     async getUser(uid:string): Promise<User>{

@@ -3,17 +3,23 @@
         <h2>保険料管理</h2>
         <p>ようこそ、{{ name }}さん</p>
 
+        <div class="button-container">
         <button routerLink="/admin/employees">
             従業員マスター
         </button>
 
+        <button routerLink="/admin/insurance-individual">
+            従業員別保険料照会
+        </button>
+
         <button routerLink="/admin/insurance">
-            保険料総額
+            保険料総額照会
         </button>
 
         <button routerLink="/login">
             ログアウト
         </button>
+        </div>
     </div>
 
     <div class="content">

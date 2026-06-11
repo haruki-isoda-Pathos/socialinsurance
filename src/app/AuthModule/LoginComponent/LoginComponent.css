@@ -1,0 +1,152 @@
+/* ==========================================================================
+   1. 共通レイアウト（セットアップ・ログイン共通）
+   ========================================================================== */
+/* 全体コンテナ */
+.setup-container,
+.login-container {
+  max-width: 450px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 77, 77, 0.08); /* 浮き出るシャドウ */
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  box-sizing: border-box;
+}
+
+/* タイトル */
+.setup-container h2,
+.login-container h2 {
+  color: #005a5b; /* 深いティール */
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-top: 0;
+}
+
+.form-container {
+  width: 100%;
+}
+
+/* ★ここがポイント：両方の画面でしっかり縦並びにします */
+.setup-container .form-group,
+.login-container .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   2. フォーム要素（ラベル・入力欄）
+   ========================================================================== */
+/* 項目名（ラベル） */
+.form-group label {
+  color: #2d4a43;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  margin-top: 16px;
+  text-align: left; /* 左寄せを保証 */
+}
+
+/* 下部にある画面切り替え用のラベル */
+.form-group label[for="login"],
+.form-group label[for="backoff"] {
+  text-align: center;
+  font-size: 13px;
+  color: #667a75;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  font-weight: normal;
+}
+
+/* 入力欄（インプット） */
+.form-group input {
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid #b2cfcb;
+  border-radius: 6px;
+  background-color: #fafdfd;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  width: 100%; /* 横幅いっぱいに広げる */
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  border-color: #008080;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.15);
+}
+
+/* ==========================================================================
+   3. ボタン（横に広がって1行ずつ縦に並びます）
+   ========================================================================== */
+.form-group button {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 13px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  border: none;
+  text-align: center;
+  width: 100%; /* ボタンも横幅いっぱいにして縦に並べる */
+  box-sizing: border-box;
+}
+
+/* メインボタン（アカウント作成 / ログイン） */
+.form-group button[type="button"]:not(#login):not(#backoff) {
+  background-color: #008080;
+  color: #ffffff;
+  margin-top: 24px;
+  box-shadow: 0 4px 12px rgba(0, 128, 128, 0.2);
+}
+
+.form-group button[type="button"]:not(#login):not(#backoff):hover:not(:disabled) {
+  background-color: #006666;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(0, 128, 128, 0.3);
+}
+
+.form-group button[type="button"]:not(#login):not(#backoff):active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* アカウント作成ボタンの無効化状態 */
+.form-group button[type="button"]:disabled {
+  background-color: #ccd9d7;
+  color: #8fa3a0;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* サブボタン（ログイン画面へ / 登録画面へ） */
+.form-group #login,
+.form-group #backoff {
+  background-color: transparent;
+  color: #008080;
+  border: 1px solid #008080;
+  padding: 11px;
+}
+
+.form-group #login:hover,
+.form-group #backoff:hover {
+  background-color: rgba(0, 128, 128, 0.05);
+  color: #006666;
+  border-color: #006666;
+}
+
+/* ==========================================================================
+   4. その他（エラーメッセージなど）
+   ========================================================================== */
+.form-group p {
+  color: #d9534f;
+  font-size: 13px;
+  margin-top: 8px;
+  margin-bottom: 0;
+  text-align: center;
+  font-weight: bold;
+}

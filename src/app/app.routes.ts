@@ -4,6 +4,7 @@ import { InitialAdminSetupComponent } from './AuthModule/InitialAdminSetupCompon
 import { ScreenComponent } from './ScreenModule/ScreenComponent';
 import { EmployeeHomeComponent } from './ScreenModule/EmployeeHomeComponent/EmployeeHomeComponent'
 import { PremiumComponent } from './ScreenModule/PremiumComponent/PremiumComponent'
+import { PremiumIndividualComponent } from './ScreenModule/PremiumIndividualComponent/PremiumIndividualComponent'
 import { authGuard } from './CoreModule/AuthGuard';
 
 export const routes: Routes = [
@@ -35,6 +36,10 @@ export const routes: Routes = [
       {
         path: 'insurance',
         component: PremiumComponent
+      },
+      {
+        path: 'insurance-individual',
+        component: PremiumIndividualComponent
       }
     ]
   }

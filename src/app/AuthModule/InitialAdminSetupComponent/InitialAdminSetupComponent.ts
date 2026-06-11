@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';''
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../CoreModule/AuthService';
 import { UserService } from '../../CoreModule/UserService';
 import { Router } from '@angular/router'
+import { Firestore, collection, query, where, getDocs } from '@angular/fire/firestore';
 
 @Component({
     selector:'app-initial-admin-setup',
@@ -22,6 +23,7 @@ export class InitialAdminSetupComponent{
     isPasswordMatch:boolean = true;
     
     constructor(
+        private firestore:Firestore,
         private authService:AuthService,
         private userService:UserService,
         private router:Router
@@ -31,10 +33,28 @@ export class InitialAdminSetupComponent{
         this.isPasswordMatch = this.password === this.confirmPassword;
     }
 
+    async existsEmployeeId(employeeId: string): Promise<boolean> {
+        const userRef = collection(this.firestore, 'users');
+        const q = query(
+          userRef,
+          where('employeeId', '==', employeeId)
+        );
+        const snapshot = await getDocs(q);
+        return !snapshot.empty;
+      }
+
     async onsubmit(){
         if (!this.isPasswordMatch){
+            alert('パスワードが確認用のものと一致しません');
             return;
         }
+
+        const exists = await this.existsEmployeeId(this.employeeId);
+        if (exists){
+            alert('すでに存在しているユーザーです');
+            return;
+        }
+
         const user = await this.authService.registerAdmin(this.employeeId,this.password);
         await this.userService.createAdminUser(
         user.uid,
@@ -42,7 +62,6 @@ export class InitialAdminSetupComponent{
         this.employeeId
         );
         this.router.navigate(['/login']);
-        
     }
 
     onLogin(){

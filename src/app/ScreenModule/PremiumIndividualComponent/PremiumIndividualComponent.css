@@ -1,0 +1,131 @@
+/* ==========================================================================
+   7. 従業員別保険料照会（子コンポーネント）
+   ========================================================================== */
+/* メインフレームの .container とバッティングしないよう、h2起点などでスコープを限定します */
+.container {
+  display: block; /* テーブルレイアウトを解除し、通常ブロックに */
+  width: auto;
+  min-height: auto;
+  background-color: #ffffff;
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 77, 77, 0.04);
+  max-width: 750px; /* 入力項目が増えたため、総額照会（600px）より少し広めに調整 */
+}
+
+/* コンポーネントタイトル */
+.container h2 {
+  color: #005a5b; /* 共通の深いティール */
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 25px;
+  letter-spacing: 0.03em;
+  border-left: 4px solid #008080; /* アクセントの左線 */
+  padding-left: 12px;
+}
+
+/* ─── 検索条件フォーム ─── */
+.container .form-container form {
+  display: flex;
+  align-items: flex-end; /* ラベルと入力欄、ボタンの下揃え */
+  gap: 16px; /* 要素間の隙間 */
+  flex-wrap: wrap; /* 画面が狭くなったら自動で折り返し */
+  margin-bottom: 35px;
+}
+
+/* 各入力アイテムの縦並びセット（ラベル＋インプット） */
+.container form .form-group-item {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 項目名（ラベル） */
+.container form label {
+  display: block;
+  color: #2d4a43;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* 従業員ID（テキスト入力）および 該当年月（month入力）共通 */
+.container form input[type="text"],
+.container form input[type="month"] {
+  padding: 11px 14px;
+  font-size: 15px;
+  border: 1px solid #b2cfcb;
+  border-radius: 6px;
+  background-color: #fafdfd;
+  color: #2d4a43;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  height: 44px; /* 高さを統一 */
+}
+
+/* 従業員ID入力欄の幅を最適化（メールアドレスが入るため少し長めに） */
+.container form input[type="text"] {
+  min-width: 260px;
+}
+
+/* 年月入力欄の幅 */
+.container form input[type="month"] {
+  min-width: 180px;
+}
+
+/* フォーカス時の共通エフェクト */
+.container form input:focus {
+  border-color: #008080;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.15);
+}
+
+/* 照会ボタン */
+.container form button[type="submit"] {
+  background-color: #008080; /* メインティール */
+  color: #ffffff;
+  border: none;
+  padding: 11px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 128, 128, 0.15);
+  height: 44px; /* インプットと完全に高さを揃える */
+  box-sizing: border-box;
+}
+
+.container form button[type="submit"]:hover {
+  background-color: #006666;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(0, 128, 128, 0.25);
+}
+
+.container form button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* ─── 照会結果エリア ─── */
+.container .result {
+  background-color: #f2f7f7; /* 淡いティールグレーの背景 */
+  border-left: 4px solid #005a5b; /* 左側の引き締め線 */
+  border-radius: 0 8px 8px 0;
+  padding: 20px 24px;
+}
+
+/* 結果の各項目（テキスト） */
+.container .result p {
+  color: #2d4a43;
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 0;
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(0, 80, 80, 0.1); /* 項目間の点線 */
+}
+
+/* 最後の項目の下線は消す */
+.container .result p:last-child {
+  border-bottom: none;
+}

@@ -1,0 +1,94 @@
+/* ==========================================================================
+   5. メインフレーム（サイドバー ＋ コンテンツエリア）
+   ========================================================================== */
+/* 画面全体を覆うコンテナ（横並びのレイアウト） */
+.container {
+    display: table;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f4f7f6; /* メインコンテンツ背景：ほんのりグレーがかった白 */
+    table-layout: fixed;
+  }
+  
+  /* ─── 左側の色付きの帯（サイドバー） ─── */
+  .sidebar {
+    display: table-cell;
+    width: 260px; /* サイドバーの横幅 */
+    background-color: #004d4d; /* 鴨の羽色（ベースよりさらに深いティール） */
+    color: #ffffff;
+    padding: 30px 20px;
+    vertical-align: top;
+    box-shadow: 4px 0 15px rgba(0, 51, 51, 0.1); /* 右側にほんのり影 */
+  }
+  
+  /* アプリタイトル */
+  .sidebar h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  
+  /* ユーザー名表示 */
+  .sidebar p {
+    font-size: 13px;
+    color: #b2cfcb; /* 淡いティールグレー */
+    margin-top: 0;
+    margin-bottom: 40px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(178, 207, 203, 0.2); /* 区切り線 */
+  }
+  
+  /* ─── メニューボタンの配置（縦並び） ─── */
+  .sidebar .button-container {
+    display: block;
+  }
+  
+  /* 通常のナビゲーションボタン（「押せそうな文字列」のデザイン） */
+  .sidebar .button-container button {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 12px 15px;
+    color: #e0f2f1; /* 完全に白ではなく、少し青緑がかった上品な白 */
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left; /* 左寄せ */
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+  }
+  
+  /* 通常ボタンのホバー（文字色変化と、うっすら背景） */
+  .sidebar .button-container button:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08); /* ほんのり背景を明るくして「押せる感」を演出 */
+    padding-left: 20px; /* ホバー時に少し右にスライドする遊び心 */
+  }
+  
+  /* ─── 例外：ログアウトボタン ─── */
+  /* 他のメニューと少し離す（一番下に配置するための余白） */
+  .sidebar .button-container button[routerLink="/login"] {
+    margin-top: 60px; /* 他のボタンからしっかり離す */
+    color: #ffab91; /* 鴨の羽色に映える、落ち着いたサンゴ・オレンジ系（警告色） */
+    border-bottom: 1px dashed rgba(255, 171, 145, 0.3); /* ログアウト専用のアンダーライン風 */
+  }
+  
+  /* ログアウトボタンのホバー */
+  .sidebar .button-container button[routerLink="/login"]:hover {
+    color: #ff8a65;
+    background-color: rgba(255, 171, 145, 0.08);
+    padding-left: 20px;
+  }
+  
+  /* ─── 右側のメインコンテンツ表示エリア ─── */
+  .content {
+    display: table-cell;
+    vertical-align: top;
+    padding: 40px;
+    box-sizing: border-box;
+  }

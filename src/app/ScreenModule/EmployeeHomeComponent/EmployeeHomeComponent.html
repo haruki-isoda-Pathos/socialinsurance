@@ -1,37 +1,55 @@
 <div class="employeeHome">
-    <h2>従業員一覧</h2>
+    <h2>従業員マスター</h2>
+    <div class="table-container">
     <table>
         <thead>
             <tr>
                 <th>従業員名</th>
                 <th>従業員ID</th>
                 <th>ステータス</th>
-                <th>健康保険料負担/会社負担</th>
-                <th>介護保険料負担/会社負担</th>
-                <th>厚生年金保険料負担/会社負担</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let employee of employees">
                 <td>{{ employee.name}}</td>
                 <td>{{ employee.employeeId}}</td>
-                <td>{{ employee.status}}</td>
-                <td>{{ employee.healthInsurancePremium}}/{{ employee.companyHealthInsurancePremium}}</td>
-                <td>{{ employee.termCareInsurancePremium}}/{{ employee.companyTermCareInsurancePremium}}</td>
-                <td>{{ employee.socialInsurancePremium}}/{{ employee.companySocialInsurancePremium}}</td>
+                <td>{{ statusList[employee.status] }}</td>
                 <td><button (click)="onEditEmployee(employee)">基本情報編集</button></td>
-                <app-modal-employee [isOpen]="isEditModalOpen" [employee]="employee" (closeEditModal)="onCloseEditModal()"></app-modal-employee>
-                <td><button (click)="onEditEmployee(employee)">保険料登録/編集</button></td>
-                <app-modal-payment [isOpen]="isPaymentModalOpen" [employee]="employee.employeeId" (closePaymentModal)="onClosePaymentModal()"></app-modal-payment>
-                <td><button (click)="deleteEmployeeDialog(employee)">削除</button></td>
-                <dialog (click)="deleteEmployeeDialog(employee)">
-                    <p>{{employee.name}}&ensp;を削除しますか？</p>
-                    <button (click)="onDeleteEmployee(employee)">削除</button>
-                    <button (click)="onCancelDelete()">キャンセル</button>
-                </dialog>
+                <td><button (click)="onOpenPaymentModal(employee)">給与等登録/編集</button></td>
+                <td><button (click)="onDeleteEmployeeDialog(employee)">削除</button></td>
             </tr>
         </tbody>
     </table>
+    </div>
+    
+    <div class="button-container">
     <button (click)="onRegisterEmployee()">従業員登録</button>
-    <app-modal-enployee [isOpen]="isModalOpen" (closeModal)="onCloseModal()"></app-modal-employee>
+    </div>
+
+
+    <app-modal-employee-register
+        *ngIf="isModalOpen"
+        (closeModal)="onCloseModal()">
+    </app-modal-employee-register>
+
+    <app-modal-employee
+        *ngIf="isEditModalOpen && selectedEmployee"
+        [employee]="selectedEmployee"
+        (closeEditModal)="onCloseEditModal()">
+    </app-modal-employee>
+
+    <app-modal-payment
+        *ngIf="isPaymentModalOpen && selectedEmployee"
+        [employee]="selectedEmployee"
+        (closePaymentModal)="onClosePaymentModal()">
+    </app-modal-payment>
+
+    <div class="modal" *ngIf="isDeleteModalOpen && selectedEmployee">
+        <div class="modal-content">
+          <p>{{ selectedEmployee.name }} を削除しますか？</p>
+          <button (click)="onDeleteEmployee()">削除</button>
+          <button (click)="onCloseDeleteModal()">キャンセル</button>
+        </div>
+      </div>
+      
 </div>

@@ -1,0 +1,139 @@
+/* ==========================================================================
+   全体コンテナのスタイリング
+   ========================================================================== */
+   .setup-container {
+    max-width: 450px;
+    margin: 60px auto;
+    padding: 40px 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 77, 77, 0.08); /* ほのかにティールを混ぜた影 */
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  }
+  
+  /* タイトル */
+  .setup-container h2 {
+    color: #005a5b; /* 深いティール */
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  
+  /* ==========================================================================
+     フォーム・入力エリア
+     ========================================================================== */
+  .form-container {
+    width: 100%;
+  }
+  
+  /* 各要素の配置を整えるラッパー */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* ラベルのスタイリング */
+  .form-group label {
+    color: #2d4a43; /* 少し緑みのあるダークグレー */
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    margin-top: 16px;
+  }
+  
+  /* 「すでにアカウントを持っている方はこちら」のラベルだけ調整 */
+  .form-group label[for="login"] {
+    text-align: center;
+    font-size: 13px;
+    color: #667a75;
+    margin-top: 32px;
+    margin-bottom: 12px;
+    font-weight: normal;
+  }
+  
+  /* 入力フィールド */
+  .form-group input {
+    padding: 12px 14px;
+    font-size: 15px;
+    border: 1px solid #b2cfcb; /* 淡いティールグレー */
+    border-radius: 6px;
+    background-color: #fafdfd;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+  }
+  
+  /* 入力フィールド：フォーカス時 */
+  .form-group input:focus {
+    border-color: #008080; /* ティールブルー */
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.15);
+  }
+  
+  /* ==========================================================================
+     ボタンのスタイリング
+     ========================================================================== */
+  .form-group button {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 13px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    border: none;
+    text-align: center;
+  }
+  
+  /* プライマリボタン：アカウント作成 */
+  .form-group button[type="button"]:not(#login) {
+    background-color: #008080; /* メインのティール */
+    color: #ffffff;
+    margin-top: 24px;
+    box-shadow: 0 4px 12px rgba(0, 128, 128, 0.2);
+  }
+  
+  .form-group button[type="button"]:not(#login):hover:not(:disabled) {
+    background-color: #006666; /* 濃いティール */
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(0, 128, 128, 0.3);
+  }
+  
+  .form-group button[type="button"]:not(#login):active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  /* アカウント作成ボタン：無効化状態（パスワード不一致など） */
+  .form-group button[type="button"]:disabled {
+    background-color: #ccd9d7;
+    color: #8fa3a0;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+  
+  /* セカンダリボタン：ログイン画面へ */
+  .form-group #login {
+    background-color: transparent;
+    color: #008080;
+    border: 1px solid #008080;
+    padding: 11px; /* 枠線分少し薄く */
+  }
+  
+  .form-group #login:hover {
+    background-color: rgba(0, 128, 128, 0.05);
+    color: #006666;
+    border-color: #006666;
+  }
+  
+  /* ==========================================================================
+     バリデーション（エラーメッセージ）
+     ========================================================================== */
+  .form-group p {
+    color: #d9534f; /* 警告用レッド（ティールと喧嘩しない落ち着いた赤） */
+    font-size: 13px;
+    margin-top: 8px;
+    margin-bottom: 0;
+    text-align: center;
+    font-weight: bold;
+  }

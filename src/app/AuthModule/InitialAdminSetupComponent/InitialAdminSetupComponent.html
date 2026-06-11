@@ -1,7 +1,10 @@
+<div class="setup-container">
 <h2>初回セットアップ</h2>
 
+<div class="form-container">
 <form>
 
+  <div class="form-group">
   <label>名前</label>
   <input type="name" [(ngModel)]="name" name="name">
 
@@ -17,12 +20,14 @@
   <button type="button" [disabled]="!isPasswordMatch" (click)="onsubmit()">
     アカウント作成
   </button>
-
+  
   <label for="login">すでにアカウントを持っている方はこちら</label>
   <button type="button" name="login" id="login" (click)="onLogin()">
     ログイン画面へ
   </button>
 
   <p *ngIf="!isPasswordMatch">パスワードが一致しません</p>
-
+  </div>
 </form>
+</div>
+</div>

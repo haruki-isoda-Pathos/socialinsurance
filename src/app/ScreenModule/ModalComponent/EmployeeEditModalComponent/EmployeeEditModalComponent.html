@@ -1,47 +1,47 @@
-<div class="modal" *ngIf="isOpen">
+<div class="modal">
     <div class="modal-content">
-        <h2>従業員編集<h2>
+        <h2>従業員編集</h2>
         <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             
             <label for="name">名前</label>
-            <input type="text" name="name" placeholder="名前" [value]="employee.name">
+            <input type="text" id="name" name="name" placeholder="名前" [(ngModel)]="employee.name" required>
 
             <label for="employeeId">従業員ID</label>
             <p>{{employee.employeeId}}&ensp;(※変更不可)</p>
 
             <label for="birthdate">生年月日</label>
-            <input type="date" name="birthdate" [value]="employee.birthdate">
+            <input type="date" id="birthdate" name="birthdate" [(ngModel)]="employee.birthdate" required>
 
             <label for="joindate">入社日</label>
-            <input type="date" name="joindate" [value]="employee.joindate">
+            <input type="date" id="joindate" name="joindate" [(ngModel)]="employee.joindate" required>
 
             <label for="resigndate">退職予定日</label>
-            <input type="date" name="resigndate" [value]="employee.resigndate">
+            <input type="date" id="resigndate" name="resigndate" [(ngModel)]="employee.resigndate">
 
             <label for="employmenttype">雇用形態</label>
-            <input type="select" name="employmenttype" [value]="employee.employmenttype">
+            <select id="employmenttype" name="employmenttype" [(ngModel)]="employee.employmenttype" required>
               <option value="permanent">正社員</option>
               <option value="temporary">正社員でない要件充足者</option>
               <option value="other">その他</option>
             </select>
 
             <label for="dependents">被扶養者（第三号被保険者）の該当</label>
-            <input type="select" name="dependents" [value]="employee.dependents">
+            <select id="dependents" name="dependents" [(ngModel)]="employee.dependents" required>
               <option value="yes">該当</option>
               <option value="no">該当しない</option>
-            </select>""
+            </select>
 
             <label for="sidejob">副業</label>
-            <input type="select" name="sidejob" [value]="employee.sidejob">
+            <select id="sidejob" name="sidejob" [(ngModel)]="employee.sidejob" required>
               <option value="yes">有</option>
               <option value="no">無</option>
             </select>
 
-            <label for="sidejobincome">副業収入</label>
-            <input type="number" name="sidejobincome" [disabled]="sidejob === 'no'" [value]="employee.sidejobincome">
+            <label for="sidejobincome">副業収入※副業が無い場合は0</label>
+            <input type="number" id="sidejobincome" name="sidejobincome" [(ngModel)]="employee.sidejobincome" required>
 
             <label for="status">ステータス</label>
-            <input type="select" name="status" [value]="employee.status">
+            <select id="status" name="status" [(ngModel)]="employee.status" required>
               <option value="b-join">入社前</option>
               <option value="active1">従事中</option>
               <option value="active2">従事中（養育期間特例適用中）</option>

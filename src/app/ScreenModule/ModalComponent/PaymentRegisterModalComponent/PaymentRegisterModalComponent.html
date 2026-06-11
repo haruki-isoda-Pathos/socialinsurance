@@ -1,31 +1,32 @@
-<div class="modal" *ngIf="isOpen">
+<div class="modal">
     <div class="modal-content">
-        <h2>保険料登録/編集<h2>
+        <h2>保険料登録/編集</h2>
+        <p>{{ employee.name }}&nbsp;さん</p>
         <p>※該当年月の情報/支給分を登録してください。</p>
         <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             <label for="year-month">該当年月</label>
-            <input type="month" name="year-month">
+            <input type="month" id="year-month" name="year-month" [(ngModel)]="payment.yearMonth" required>
             
             <label for="basicpay">基本給</label>
-            <input type="number" name="basicpay">
+            <input type="number" id="basicpay" name="basicpay" [(ngModel)]="payment.basicPay" required>
 
             <label for="basicovertimepay">固定残業代</label>
-            <input type="number" name="basicovertimepay">
+            <input type="number" id="basicovertimepay" name="basicovertimepay" [(ngModel)]="payment.basicOvertimePay" required>
 
             <label for="networkday">出勤日数</label>
-            <input type="number" name="networkday">
+            <input type="number" id="networkday" name="networkday" [(ngModel)]="payment.networkDay" required>
         <!--一応17日以上が随時改定の区切りだが、それ以外の制度が見つかったとき用に二択にしなかった-->
             <label for="incentivepay">歩合給</label>
-            <input type="number" name="incentivepay">
+            <input type="number" id="incentivepay" name="incentivepay" [(ngModel)]="payment.incentivePay" required>
 
             <label for="mobilityallowance">交通費支給（割賦当月分）</label>
-            <input type="number" name="mobilityallowance">
+            <input type="number" id="mobilityallowance" name="mobilityallowance" [(ngModel)]="payment.mobilityAllowance" required>
 
             <label for="specialallowance">諸手当・現物給付・そのた定期給の月割り価値</label>
-            <input type="number" name="specialallowance">
+            <input type="number" id="specialallowance" name="specialallowance" [(ngModel)]="payment.specialAllowance" required>
 
             <label for="bonus">賞与※年3度以下のもので、当月に支給した場合のみ</label>
-            <input type="number" name="bonus">
+            <input type="number" id="bonus" name="bonus" [(ngModel)]="payment.bonus" required>
         
         <button type="submit">登録</button>
         <button type="button" (click)="onClose()">キャンセル</button>

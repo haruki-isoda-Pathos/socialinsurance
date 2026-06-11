@@ -1,33 +1,39 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Output, EventEmitter } from "@angular/core";
+import { CommonModule } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
 import { EmployeeService } from '../../../CoreModule/EmployeeService';
 import { Employee } from '../../../ModelModule/EmployeeModel';
 
 @Component({
-    selector: 'app-modal-employee',
+    selector: 'app-modal-employee-register',
     standalone: true,
-    templateUrl: './ModalComponent.html',
-    styleUrls:['./ModalComponent.css']
+    imports: [CommonModule, FormsModule],
+    templateUrl: './EmployeeRegisterModalComponent.html',
+    styleUrls:['./EmployeeRegisterModalComponent.css']
 })
 
-export class ModalComponent {
+export class EmployeeRegisterModalComponent {
 
     constructor(private employeeService: EmployeeService){}
     
-    @Input() isOpen: boolean = false;
     @Output() closeModal = new EventEmitter<void>();
 
     name: string = '';
     employeeId: string = '';
-    birthdate: Date = new Date();
-    joindate: Date = new Date();
-    resigndate: Date = new Date();
+    birthdate: string = '';
+    joindate: string = '';
+    resigndate: string = '';
     employmenttype: string = '';
     dependents: string = '';
     sidejob: string = '';
     sidejobincome: number | null = null;
     status: string = '';
 
-    onSubmit() {
+    async onSubmit(f: NgForm) {
+        if (f.invalid) {
+            alert('すべての項目を入力して下さい');
+            return;
+        }
         const newEmployee = {
             name: this.name,
             employeeId: this.employeeId,
@@ -39,9 +45,13 @@ export class ModalComponent {
             sidejob: this.sidejob,
             sidejobincome: this.sidejobincome,
             status: this.status,
+        };
+        try {
+            await this.employeeService.createEmployee(newEmployee as Employee);
+            this.closeModal.emit();
+        } catch {
+            alert('従業員の登録に失敗しました。IDが重複している可能性があります。');
         }
-        this.employeeService.createEmployee(newEmployee as Employee)
-        this.closeModal.emit();
     }
     
     onClose() {

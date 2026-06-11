@@ -1,0 +1,146 @@
+/* ==========================================================================
+   9. モーダル共通・背景マスク
+   ========================================================================== */
+   .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 38, 38, 0.4); /* うっすらティール混じりの暗転背景 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow-y: auto; /* モーダル自体が画面より長くなった場合にスクロール可能に */
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* ─── モーダルコンテンツ（白ボックス） ─── */
+  .modal-content {
+    background-color: #ffffff;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0, 51, 51, 0.2);
+    max-width: 500px; /* 縦並びで見やすい最適な横幅 */
+    width: 100%;
+    max-height: 90vh; /* 画面からはみ出さないよう上限を設定 */
+    overflow-y: auto; /* ボックス内が長くなったらスクロール */
+    box-sizing: border-box;
+  }
+  
+  /* モーダルタイトル */
+  .modal-content h2 {
+    color: #005a5b; /* 共通の深いティール */
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
+  
+  /* ─── フォームのシンプルな縦並びレイアウト ─── */
+  .modal-content form {
+    display: flex;
+    flex-direction: column; /* 完全に一本の縦並びにする */
+  }
+  
+  /* 項目名（ラベル） */
+  .modal-content form label {
+    color: #2d4a43;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    margin-top: 16px;
+    text-align: left;
+  }
+  
+  /* 最初のラベルだけ上の余白を詰める */
+  .modal-content form label:first-of-type {
+    margin-top: 0;
+  }
+  
+  /* ─── 入力コントロール共通（インプット・セレクト） ─── */
+  .modal-content form input[type="text"],
+  .modal-content form input[type="date"],
+  .modal-content form input[type="number"],
+  .modal-content form select {
+    padding: 11px 14px;
+    font-size: 15px;
+    border: 1px solid #b2cfcb;
+    border-radius: 6px;
+    background-color: #fafdfd;
+    color: #2d4a43;
+    outline: none;
+    transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+  
+  /* フォーカス時のエフェクト（共通ルール） */
+  .modal-content form input:focus,
+  .modal-content form select:focus {
+    border-color: #008080;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.15);
+  }
+  
+  /* ─── 特殊要素：変更不可の従業員ID表示 ─── */
+  .modal-content form label[for="employeeId"] + p {
+    margin: 0;
+    padding: 11px 14px;
+    font-size: 15px;
+    background-color: #f0f4f4; /* 編集できないことが一目でわかるグレー背景 */
+    color: #667a75;
+    border: 1px solid #ccd9d7;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-weight: 500;
+  }
+  
+  /* ─── 下部ボタンエリア ─── */
+  /* 編集完了ボタン（メインボタン） */
+  .modal-content form button[type="submit"] {
+    background-color: #008080; /* メインティール */
+    color: #ffffff;
+    border: none;
+    padding: 13px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 128, 128, 0.2);
+    margin-top: 30px; /* フォームの最下部から少し離す */
+    width: 100%;
+  }
+  
+  .modal-content form button[type="submit"]:hover {
+    background-color: #006666;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(0, 128, 128, 0.3);
+  }
+  
+  /* キャンセルボタン（セカンダリボタン） */
+  .modal-content form button[type="button"] {
+    background-color: transparent;
+    color: #667a75;
+    border: 1px solid #b2cfcb;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 12px; /* 編集完了ボタンの下に並べる */
+    width: 100%;
+  }
+  
+  .modal-content form button[type="button"]:hover {
+    background-color: #f2f7f7;
+    color: #2d4a43;
+    border-color: #9cbab5;
+  }

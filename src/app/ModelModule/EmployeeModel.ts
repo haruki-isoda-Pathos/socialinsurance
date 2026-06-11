@@ -1,9 +1,9 @@
 export interface Employee{
     name: string;
     employeeId: string;
-    birthdate: Date;
-    joindate: Date;
-    resigndate?: Date;
+    birthdate: string;
+    joindate: string;
+    resigndate?: string;
     employmenttype: string;
     dependents: string;
     sidejob: string;

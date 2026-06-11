@@ -1,16 +1,16 @@
-import { Component } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { PremiumService } from "../../CoreModule/PremiumService";
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { PremiumService } from '../../CoreModule/PremiumService';
 
 @Component({
-    selector: "app-premium",
+    selector:'insurance-individual',
     standalone: true,
     imports: [FormsModule],
-    templateUrl: "./PremiumComponent.html",
-    styleUrls: ["./PremiumComponent.css"]
+    templateUrl: './PremiumIndividualComponent.html',
+    styleUrls: ['./PremiumIndividualComponent.css']
 })
 
-export class PremiumComponent {
+export class PremiumIndividualComponent {
     employeeId: string = '';
     yearMonth: string = '';
     constructor(private premiumService: PremiumService){}

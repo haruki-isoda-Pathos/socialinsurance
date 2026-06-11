@@ -1,7 +1,10 @@
-<div class="net-insurance-menu">
-    <h2>保険料総額照会</h2>
+<div class="container">
+    <h2>従業員別保険料照会</h2>
     <div class="form-container">
     <form>
+        <label for="employeeId">従業員ID(メールアドレス)</label>
+        <input type="text" id="employeeId" name="employeeId" [(ngModel)]="employeeId">
+
         <label for="yearMonth">該当年月</label>
         <input type="month" id="yearMonth" name="yearMonth" [(ngModel)]="yearMonth">
 

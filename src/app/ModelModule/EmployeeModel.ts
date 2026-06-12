@@ -5,6 +5,7 @@ export interface Employee{
     joindate: string;
     resigndate?: string;
     employmenttype: string;
+    estincome: number | null;
     dependents: string;
     sidejob: string;
     sidejobincome: number | null;

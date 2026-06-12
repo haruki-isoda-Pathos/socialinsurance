@@ -19,11 +19,18 @@
             <input type="date" id="resigndate" name="resigndate" [(ngModel)]="employee.resigndate">
 
             <label for="employmenttype">雇用形態</label>
+              <span class="tooltip-container">
+                <span class="tooltip-icon">?</span>
+                <span class="tooltip-text">「正社員でない要件充足者」の「要件」とは、①正社員規定労働時間の3/4以上働いている者、②①に該当しなくても、51人以上の事業所で所定労働時間が週20時間以上、月収8.8万円以上の学生でない者、のいずれかを指す</span>
+              </span>
             <select id="employmenttype" name="employmenttype" [(ngModel)]="employee.employmenttype" required>
               <option value="permanent">正社員</option>
               <option value="temporary">正社員でない要件充足者</option>
               <option value="other">その他</option>
             </select>
+
+            <label for="estincome">見込み給付総額</label>
+            <input type="number" id="estincome" name="estincome" [(ngModel)]="employee.estincome" required>
 
             <label for="dependents">被扶養者（第三号被保険者）の該当</label>
             <select id="dependents" name="dependents" [(ngModel)]="employee.dependents" required>

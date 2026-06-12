@@ -22,8 +22,9 @@ export class EmployeeRegisterModalComponent {
     employeeId: string = '';
     birthdate: string = '';
     joindate: string = '';
-    resigndate: string = '';
+    resigndate?: string = '';
     employmenttype: string = '';
+    estincome: number | null = null;
     dependents: string = '';
     sidejob: string = '';
     sidejobincome: number | null = null;
@@ -31,7 +32,7 @@ export class EmployeeRegisterModalComponent {
 
     async onSubmit(f: NgForm) {
         if (f.invalid) {
-            alert('すべての項目を入力して下さい');
+            alert('退社予定日以外のすべての項目を入力して下さい');
             return;
         }
         const newEmployee = {
@@ -41,6 +42,7 @@ export class EmployeeRegisterModalComponent {
             joindate: this.joindate,
             resigndate: this.resigndate,
             employmenttype: this.employmenttype,
+            estincome: this.estincome,
             dependents: this.dependents,
             sidejob: this.sidejob,
             sidejobincome: this.sidejobincome,

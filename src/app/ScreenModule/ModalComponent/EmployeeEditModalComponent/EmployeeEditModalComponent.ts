@@ -23,6 +23,7 @@ export class EmployeeEditModalComponent {
         joindate: '',
         resigndate: '',
         employmenttype: '',
+        estincome: null,
         dependents: '',
         sidejob: '',
         sidejobincome: null,
@@ -33,7 +34,7 @@ export class EmployeeEditModalComponent {
 
     async onSubmit(f: NgForm){
         if (f.invalid) {
-            alert('すべての項目を入力して下さい');
+            alert('退社予定日以外のすべての項目を入力して下さい');
             return;
         }
         try {

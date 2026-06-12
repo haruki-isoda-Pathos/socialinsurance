@@ -1,7 +1,8 @@
 import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { EmployeeService } from '../../CoreModule/EmployeeService';
-import { Employee } from '../../ModelModule/EmployeeModel'
+import { Employee } from '../../ModelModule/EmployeeModel';
 import { EmployeeRegisterModalComponent } from '../ModalComponent/EmployeeRegisterModalComponent/EmployeeRegisterModalComponent';
 import { EmployeeEditModalComponent } from '../ModalComponent/EmployeeEditModalComponent/EmployeeEditModalComponent';
 import { PaymentRegisterModalComponent } from '../ModalComponent/PaymentRegisterModalComponent/PaymentRegisterModalComponent';
@@ -9,86 +10,109 @@ import { PaymentRegisterModalComponent } from '../ModalComponent/PaymentRegister
 @Component({
     selector: 'app-employee-home',
     standalone: true,
-    imports: [CommonModule, EmployeeRegisterModalComponent, EmployeeEditModalComponent, PaymentRegisterModalComponent],
+    imports: [
+        CommonModule,
+        FormsModule,
+        EmployeeRegisterModalComponent,
+        EmployeeEditModalComponent,
+        PaymentRegisterModalComponent,
+    ],
     templateUrl: './EmployeeHomeComponent.html',
-    styleUrls:['./EmployeeHomeComponent.css']
+    styleUrls: ['./EmployeeHomeComponent.css'],
 })
-
 export class EmployeeHomeComponent implements OnInit {
+    employeeService = inject(EmployeeService);
+    isModalOpen = false;
+    isEditModalOpen = false;
+    isPaymentModalOpen = false;
+    isDeleteModalOpen = false;
+    employees: Employee[] = [];
+    selectedEmployee: Employee | null = null;
+    displayDate = this.formatDate(new Date());
 
-  employeeService = inject(EmployeeService);
-  isModalOpen = false;
-  isEditModalOpen = false;
-  isPaymentModalOpen = false;
-  isDeleteModalOpen = false;
-  employees: Employee[] = [];
-  selectedEmployee: Employee | null = null;
+    constructor(private cdr: ChangeDetectorRef) {}
 
-  constructor(private cdr: ChangeDetectorRef) {}
+    statusList: Record<string, string> = {
+        'b-join': '入社前',
+        active1: '従事中',
+        active2: '従事中（養育期間特例適用中）',
+        resigning: '退職予定',
+        resigned: '退職',
+        inactive: '休職',
+        inactive1: '特別休職(育休)',
+        inactive2: '特別休職(産休)',
+        inactive3: '特別休職(育休+産休)',
+    };
 
-  statusList: Record<string, string> = {
-    "b-join":"入社前",
-    "active1":"従事中",
-    "active2":"従事中（養育期間特例適用中）",
-    "resigning":"退職予定",
-    "resigned":"退職",
-    "inactive":"休職",
-    "inactive1":"特別休職(育休)",
-    "inactive2":"特別休職(産休)",
-    "inactive3":"特別休職(育休+産休)"
-  }
+    async onRegisterEmployee() {
+        this.isModalOpen = true;
+    }
 
-  async onRegisterEmployee() {
-    this.isModalOpen = true;
-  }
-  async onCloseModal() {
-    this.isModalOpen = false;
-    this.employees = await this.employeeService.getEmployees();
-    this.cdr.detectChanges();
-  }
+    async onCloseModal() {
+        this.isModalOpen = false;
+        await this.loadEmployees();
+    }
 
+    async onEditEmployee(employee: Employee) {
+        this.selectedEmployee = { ...employee };
+        this.isEditModalOpen = true;
+    }
 
-  async onEditEmployee(employee: Employee) {
-    this.selectedEmployee = employee;
-    this.isEditModalOpen = true;
-  }
-  async onCloseEditModal() {
-    this.isEditModalOpen = false;
-  }
+    async onCloseEditModal() {
+        this.isEditModalOpen = false;
+        this.selectedEmployee = null;
+        await this.loadEmployees();
+    }
 
+    async onOpenPaymentModal(employee: Employee) {
+        this.selectedEmployee = { ...employee };
+        this.isPaymentModalOpen = true;
+    }
 
-  async onOpenPaymentModal(employee: Employee) {
-    this.selectedEmployee = employee;
-    this.isPaymentModalOpen = true;
-  }
-  async onClosePaymentModal() {
-    this.isPaymentModalOpen = false;
-    this.selectedEmployee = null;
-  }
+    async onClosePaymentModal() {
+        this.isPaymentModalOpen = false;
+        this.selectedEmployee = null;
+    }
 
+    async onDeleteEmployeeDialog(employee: Employee) {
+        this.isDeleteModalOpen = true;
+        this.selectedEmployee = employee;
+    }
 
-  async onDeleteEmployeeDialog(employee: Employee) {
-    this.isDeleteModalOpen = true;
-    this.selectedEmployee = employee;
-  }
-  async onCloseDeleteModal() {
-    this.isDeleteModalOpen = false;
-    this.selectedEmployee = null;
-  }
-  async onDeleteEmployee(){
-    if (!this.selectedEmployee) return;
-  await this.employeeService.deleteEmployee(this.selectedEmployee.employeeId);
-    this.isDeleteModalOpen = false;
-    this.employees = await this.employeeService.getEmployees()
-    console.log(this.employees);
-    this.selectedEmployee = null;
-    this.cdr.detectChanges();
-  }
+    async onCloseDeleteModal() {
+        this.isDeleteModalOpen = false;
+        this.selectedEmployee = null;
+    }
 
+    async onDeleteEmployee() {
+        if (!this.selectedEmployee) return;
+        try {
+            await this.employeeService.deleteEmployee(this.selectedEmployee.employeeId);
+            this.isDeleteModalOpen = false;
+            this.selectedEmployee = null;
+            await this.loadEmployees();
+        } catch {
+            alert('従業員の削除に失敗しました。');
+        }
+    }
 
-  async ngOnInit() {
-    this.employees = await this.employeeService.getEmployees()  
-    this.cdr.detectChanges();
-  }
- 
+    async onApplyDisplayDate() {
+        await this.loadEmployees();
+    }
+
+    async ngOnInit() {
+        await this.loadEmployees();
+    }
+
+    private async loadEmployees() {
+        this.employees = await this.employeeService.getEmployeesByDisplayDate(this.displayDate);
+        this.cdr.detectChanges();
+    }
+
+    private formatDate(date: Date): string {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
 }

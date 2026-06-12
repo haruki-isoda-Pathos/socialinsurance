@@ -1,5 +1,12 @@
 <div class="employeeHome">
     <h2>従業員マスター</h2>
+
+    <div class="display-date-container">
+        <label for="displayDate">表示年月日</label>
+        <input type="date" id="displayDate" name="displayDate" [(ngModel)]="displayDate">
+        <button type="button" (click)="onApplyDisplayDate()">表示</button>
+    </div>
+
     <div class="table-container">
     <table>
         <thead>

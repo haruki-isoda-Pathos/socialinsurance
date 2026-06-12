@@ -20,6 +20,45 @@
     padding-left: 12px;
   }
   
+  /* ─── 表示年月日 ─── */
+  .display-date-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .display-date-container label {
+    color: #2d4a43;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .display-date-container input[type="date"] {
+    padding: 8px 12px;
+    border: 1px solid #ccd9d7;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #2d4a43;
+  }
+
+  .display-date-container button {
+    background-color: #008080;
+    color: #ffffff;
+    border: none;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .display-date-container button:hover {
+    background-color: #006666;
+  }
+
   /* ─── テーブル（一覧表）のスタイリング ─── */
   .table-container {
     width: 100%;

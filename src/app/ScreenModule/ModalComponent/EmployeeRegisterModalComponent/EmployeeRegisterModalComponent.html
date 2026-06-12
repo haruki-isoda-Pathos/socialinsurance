@@ -60,6 +60,9 @@
               <option value="inactive3">特別休職(育休+産休)</option>
             </select>
 
+            <label for="applicabledate">上記内容の適用開始年月日</label>
+            <input type="date" id="applicabledate" name="applicabledate" [(ngModel)]="applicabledate" required>
+
             <button type="submit">登録</button>
             <button type="button" (click)="onClose()">キャンセル</button>
         </form>

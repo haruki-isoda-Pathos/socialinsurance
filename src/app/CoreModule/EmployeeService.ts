@@ -9,7 +9,7 @@ export class EmployeeService {
     constructor(private firestore: Firestore){}
 
     async createEmployee(employee: Employee){
-        const employeeRef = doc(this.firestore, 'employees', employee.employeeId);
+        const employeeRef = doc(this.firestore, 'employees', employee.employeeId, 'applicabledate', employee.applicabledate);
         const snapshot = await getDoc(employeeRef);
         if(snapshot.exists()){throw new Error('従業員情報が既に存在します')}
         else{
@@ -18,7 +18,7 @@ export class EmployeeService {
     }
 
     async updateEmployee(employee: Employee){
-        const employeeRef = doc(this.firestore, 'employees', employee.employeeId)
+        const employeeRef = doc(this.firestore, 'employees', employee.employeeId, 'applicabledate', employee.applicabledate)
         await setDoc(employeeRef, employee)
     }
 

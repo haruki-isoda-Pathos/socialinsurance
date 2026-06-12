@@ -27,7 +27,8 @@ export class EmployeeEditModalComponent {
         dependents: '',
         sidejob: '',
         sidejobincome: null,
-        status: ''
+        status: '',   
+        applicabledate: '',
     };
 
     @Output() closeEditModal = new EventEmitter<void>();

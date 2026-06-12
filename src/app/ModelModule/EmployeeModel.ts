@@ -10,4 +10,5 @@ export interface Employee{
     sidejob: string;
     sidejobincome: number | null;
     status: string;
+    applicabledate: string;
     }

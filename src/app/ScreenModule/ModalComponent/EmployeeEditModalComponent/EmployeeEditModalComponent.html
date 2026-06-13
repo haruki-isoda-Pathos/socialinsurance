@@ -39,6 +39,11 @@
             </select>
 
             <label for="sidejob">副業</label>
+            <span class="tooltip-container">
+              <span class="tooltip-icon">?</span>
+              <span class="tooltip-text">副業の有無は、副業に従事しているか、でなく①副業先で正社員をしている、②①でなくても、副業先で「正社員でない要件充足者」であることである。「正社員でない要件充足者」については、項目「雇用形態」のアナウンスを参照せよ。
+              </span>
+            </span>
             <select id="sidejob" name="sidejob" [(ngModel)]="employee.sidejob" required>
               <option value="yes">有</option>
               <option value="no">無</option>

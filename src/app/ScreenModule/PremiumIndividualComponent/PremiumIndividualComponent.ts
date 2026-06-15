@@ -17,6 +17,7 @@ export class PremiumIndividualComponent {
 
     async onReference() {
         await this.premiumService.getStandardMonthlyRemun(this.employeeId, this.yearMonth);
+        //これまず、onReferenceで得た従業員とyearMonthの情報をサービスに送らないといかんよね。
         //計算結果が出てくるのでそれを補完で出す、という。
     }
 }

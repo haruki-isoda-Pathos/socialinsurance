@@ -19,15 +19,16 @@
             <input type="date" id="resigndate" name="resigndate" [(ngModel)]="resigndate">
 
             <label for="employmenttype">雇用形態</label>
-              <span class="tooltip-container">
-                <span class="tooltip-icon">?</span>
-                <span class="tooltip-text">「正社員でない要件充足者」の「要件」とは、①正社員規定労働時間の3/4以上働いている者、②①に該当しなくても、51人以上の事業所で所定労働時間が週20時間以上、月収8.8万円以上の学生でない者、のいずれかを指す。</span>
-              </span>
-            <select id="employmenttype" name="employmenttype" [(ngModel)]="employmenttype" required>
-              <option value="permanent">正社員</option>
-              <option value="temporary">正社員でない要件充足者</option>
-              <option value="other">その他</option>
-            </select>
+            <span class="tooltip-container">
+              <span class="tooltip-icon">?</span>
+              <span class="tooltip-text">「正社員でない要件充足者」の「要件」とは、正社員規定労働時間の3/4以上働いていることをさす。また、特定適用事業所の短時間労働者とは、右に該当しなくても、51人以上の事業所で所定労働時間が週20時間以上、月収8.8万円以上の学生でない者、を指す。</span>
+            </span>
+          <select id="employmenttype" name="employmenttype" [(ngModel)]="employmenttype" required>
+            <option value="permanent">正社員</option>
+            <option value="temporary">正社員でない要件充足者</option>
+            <option value="short-term">特定適用事業所の短時間労働者</option>
+            <option value="other">その他</option>
+          </select>
 
             <label for="estincome">見込み給付総額</label>
             <input type="number" id="estincome" name="estincome" [(ngModel)]="estincome" required>
@@ -41,8 +42,7 @@
             <label for="sidejob">副業</label>
             <span class="tooltip-container">
               <span class="tooltip-icon">?</span>
-              <span class="tooltip-text">副業の有無は、副業に従事しているか、でなく①副業先で正社員をしている、②①でなくても、副業先で「正社員でない要件充足者」であることである。「正社員でない要件充足者」については、項目「雇用形態」のアナウンスを参照せよ。
-              </span>
+              <span class="tooltip-text">副業の有無は、副業に従事しているか、でなく、副業先で社会保険の対象となっているかである。上記雇用形態のうち、「正社員」「正社員でない要件充足者」「特定適用事業所の短時間労働者」は社会保険の対象となっている。各定義は項目「雇用形態」のアナウンスを参照せよ。</span>
             </span>
             <select id="sidejob" name="sidejob" [(ngModel)]="sidejob" required>
               <option value="yes">有</option>

@@ -25,8 +25,6 @@ export class EmployeeEditModalComponent {
         employmenttype: '',
         estincome: null,
         dependents: '',
-        sidejob: '',
-        sidejobincome: null,
         status: '',   
         applicabledate: '',
     };

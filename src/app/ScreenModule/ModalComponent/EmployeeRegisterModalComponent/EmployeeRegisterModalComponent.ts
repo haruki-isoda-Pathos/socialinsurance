@@ -26,8 +26,6 @@ export class EmployeeRegisterModalComponent {
     employmenttype: string = '';
     estincome: number | null = null;
     dependents: string = '';
-    sidejob: string = '';
-    sidejobincome: number | null = null;
     status: string = '';
     applicabledate: string = '';
 
@@ -45,8 +43,6 @@ export class EmployeeRegisterModalComponent {
             employmenttype: this.employmenttype,
             estincome: this.estincome,
             dependents: this.dependents,
-            sidejob: this.sidejob,
-            sidejobincome: this.sidejobincome,
             status: this.status,
             applicabledate: this.applicabledate,
         };

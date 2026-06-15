@@ -30,7 +30,7 @@
             <option value="other">その他</option>
           </select>
 
-            <label for="estincome">見込み給付総額</label>
+            <label for="estincome">入社時見込み給付総額</label>
             <input type="number" id="estincome" name="estincome" [(ngModel)]="estincome" required>
 
             <label for="dependents">被扶養者（第三号被保険者）の該当</label>
@@ -38,19 +38,6 @@
               <option value="yes">該当</option>
               <option value="no">該当しない</option>
             </select>
-
-            <label for="sidejob">副業</label>
-            <span class="tooltip-container">
-              <span class="tooltip-icon">?</span>
-              <span class="tooltip-text">副業の有無は、副業に従事しているか、でなく、副業先で社会保険の対象となっているかである。上記雇用形態のうち、「正社員」「正社員でない要件充足者」「特定適用事業所の短時間労働者」は社会保険の対象となっている。各定義は項目「雇用形態」のアナウンスを参照せよ。</span>
-            </span>
-            <select id="sidejob" name="sidejob" [(ngModel)]="sidejob" required>
-              <option value="yes">有</option>
-              <option value="no">無</option>
-            </select>
-
-            <label for="sidejobincome">副業収入※副業が無い場合は0</label>
-            <input type="number" id="sidejobincome" name="sidejobincome" [(ngModel)]="sidejobincome" required>
 
             <label for="status">ステータス</label>
             <select id="status" name="status" [(ngModel)]="status" required>

@@ -7,30 +7,63 @@
             <label for="year-month">該当年月</label>
             <input type="month" id="year-month" name="year-month" [(ngModel)]="payment.yearMonth" required>
             
-            <label for="basicpay">基本給</label>
-            <input type="number" id="basicpay" name="basicpay" [(ngModel)]="payment.basicPay" required>
-
-            <label for="basicovertimepay">固定残業代</label>
-            <input type="number" id="basicovertimepay" name="basicovertimepay" [(ngModel)]="payment.basicOvertimePay" required>
-
-            <label for="networkday">出勤日数</label>
+            <label for="networkday">出勤日数計(本業)</label>
             <input type="number" id="networkday" name="networkday" [(ngModel)]="payment.networkDay" required>
-        <!--一応17日以上が随時改定の区切りだが、それ以外の制度が見つかったとき用に二択にしなかった-->
-            <label for="incentivepay">歩合給</label>
-            <input type="number" id="incentivepay" name="incentivepay" [(ngModel)]="payment.incentivePay" required>
 
-            <label for="mobilityallowance">交通費支給（割賦当月分）</label>
-            <input type="number" id="mobilityallowance" name="mobilityallowance" [(ngModel)]="payment.mobilityAllowance" required>
+            <label for="fixedPay">
+                固定的給与計（本業）
+                <span class="tooltip-container">
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text">健保法43条、健保則4条、厚年法23条、昭和36年通達による、固定的賃金に含まれる支給項目の総計。(残業手当、休日出勤手当、精勤手当、歩合給など)</span>
+                </span>
+            </label>
+            <input type="number" id="fixedPay" name="fixedPay" [(ngModel)]="payment.fixedPay" required>
 
-            <label for="specialallowance">諸手当・現物給付・そのた定期給の月割り価値</label>
-            <input type="number" id="specialallowance" name="specialallowance" [(ngModel)]="payment.specialAllowance" required>
+            <label for="currentPay">
+                非固定的給与計（本業）
+                <span class="tooltip-container">
+                    <span class="tooltip-icon">?</span>
+                    <span class="tooltip-text">健保法43条、健保則4条、厚年法23条、昭和36年通達による、固定的賃金に含まれない支給項目の総計。(基本給、就業規則上の役職手当、固定残業代など)</span>
+                </span>
+            </label>
+            <input type="number" id="currentPay" name="currentPay" [(ngModel)]="payment.currentPay" required>
 
-            <label for="bonus">賞与※年3度以下のもので、当月に支給した場合のみ</label>
-            <input type="number" id="bonus" name="bonus" [(ngModel)]="payment.bonus" required>
+            <div class="checkbox-container">
+                <input type="checkbox" id="sidejobincome" name="sidejobincome" [(ngModel)]="payment.sidejobincome" required>
+                <label for="sidejobincome">
+                    副業の有無
+                    <span class="tooltip-container">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltip-text">副業の有無は、副業に従事しているか、でなく、副業先で社会保険の対象となっているかである。社会保険の対象となる者は、正社員、正社員の規定労働時間の3/4以上働いている者、そのほか51人以上の事業所で所定労働時間が週20時間以上、月収8.8万円以上の学生でない者である。</span>
+                    </span>
+                </label>
+            </div>
+
+            <ng-container *ngIf="payment.sidejobincome">
+                <label for="sideJobNetworkDay">出勤日数計(副業)</label>
+                <input type="number" id="sideJobNetworkDay" name="sideJobNetworkDay" [(ngModel)]="payment.sideJobNetworkDay" [required]="payment.sidejobincome">
+
+                <label for="sideJobFixedPay">
+                    固定的給与計（副業）
+                    <span class="tooltip-container">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltip-text">健保法43条、健保則4条、厚年法23条、昭和36年通達による、固定的賃金に含まれる支給項目の総計。(残業手当、休日出勤手当、精勤手当、歩合給など)</span>
+                    </span>
+                </label>
+                <input type="number" id="sideJobFixedPay" name="sideJobFixedPay" [(ngModel)]="payment.sideJobFixedPay" [required]="payment.sidejobincome">
+
+                <label for="sideJobCurrentPay">
+                    非固定的給与計（副業）
+                    <span class="tooltip-container">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltip-text">健保法43条、健保則4条、厚年法23条、昭和36年通達による、固定的賃金に含まれない支給項目の総計。(基本給、就業規則上の役職手当、固定残業代など)</span>
+                    </span>
+                </label>
+                <input type="number" id="sideJobCurrentPay" name="sideJobCurrentPay" [(ngModel)]="payment.sideJobCurrentPay" [required]="payment.sidejobincome">
+            </ng-container>
         
-        <button type="submit">登録</button>
-        <button type="button" (click)="onClose()">キャンセル</button>
+            <button type="submit">登録</button>
+            <button type="button" (click)="onClose()">キャンセル</button>
         </form>
     </div>
 </div>
-

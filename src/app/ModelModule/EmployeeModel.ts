@@ -7,8 +7,6 @@ export interface Employee{
     employmenttype: string;
     estincome: number | null;
     dependents: string;
-    sidejob: string;
-    sidejobincome: number | null;
     status: string;
     applicabledate: string;
     }

@@ -20,13 +20,13 @@ export class PaymentRegisterModalComponent {
     payment: Payment = {
         employeeId: '',
         yearMonth: '',
-        basicPay: 0,
-        basicOvertimePay: 0,
         networkDay: 0,
-        incentivePay: 0,
-        mobilityAllowance: 0,
-        specialAllowance: 0,
-        bonus: 0,
+        fixedPay: 0,
+        currentPay: 0,
+        sidejobincome: false,
+        sideJobNetworkDay: 0,
+        sideJobFixedPay: 0,
+        sideJobCurrentPay: 0,
     }
 
     private paymentService = inject(PaymentService) 
@@ -39,13 +39,13 @@ export class PaymentRegisterModalComponent {
         const payment = {
             employeeId: this.employee.employeeId,
             yearMonth: this.payment.yearMonth,
-            basicPay: this.payment.basicPay,
-            basicOvertimePay: this.payment.basicOvertimePay,
+            fixedPay: this.payment.fixedPay,
+            currentPay: this.payment.currentPay,
             networkDay: this.payment.networkDay,
-            incentivePay: this.payment.incentivePay,
-            mobilityAllowance: this.payment.mobilityAllowance,
-            specialAllowance: this.payment.specialAllowance,
-            bonus: this.payment.bonus,
+            sidejobincome: this.payment.sidejobincome,
+            sideJobNetworkDay: this.payment.sideJobNetworkDay,
+            sideJobFixedPay: this.payment.sideJobFixedPay,
+            sideJobCurrentPay: this.payment.sideJobCurrentPay,
         };
         try {
             await this.paymentService.registerPayment(payment);

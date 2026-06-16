@@ -7,10 +7,14 @@ export class PremiumService {
 
     constructor(private firestore: Firestore){}
 
-    async getStandardMonthlyRemun(employeeId: string, yearMonth: string) {
+    async getMonthlyPayment(employeeId: string, yearMonth: string) {
         const paymentRef = doc(this.firestore, 'employees',employeeId, 'payments', yearMonth);
         const snapshot = await getDoc(paymentRef)
         //リストをインポートしてreturnする。
+    }
+
+    async getStatus(employeeId: string, yearMonth: string) {
+        
     }
     
 }

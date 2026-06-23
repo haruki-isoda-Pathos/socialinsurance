@@ -8,13 +8,21 @@
         <label for="yearMonth">該当年月</label>
         <input type="month" id="yearMonth" name="yearMonth" [(ngModel)]="yearMonth">
 
-        <button type="submit" (click)="onReference()">指定年月分の保険料を照会</button>
+        <button type="submit" (click)="onReference()" [disabled]="isLoading">指定年月分の保険料を照会</button>
     </form>
     </div>
     <div class="result">
-        <p>健康保険料: 100<!--{{ healthInsurancePremiumIndividual }}-->円/内会社負担分</p>
-        <p>介護保険料: 100<!--{{ termCareInsurancePremiumIndividual }}-->円/内会社負担分</p>
-        <p>厚生年金保険料: 100<!--{{ socialInsurancePremiumIndividual }}-->円/内会社負担分</p>
-        <p>備考:<!--{{ remarks }}--></p>
+        <p>健康保険料:{{ healthInsurancePremiumIndividual }}円/内会社負担分{{ healthInsuranceCompanyShare }}円</p>
+        <p>介護保険料:{{ termCareInsurancePremiumIndividual }}円/内会社負担分{{ termCareInsuranceCompanyShare }}円</p>
+        <p>厚生年金保険料:{{ socialInsurancePremiumIndividual }}円/内会社負担分{{ socialInsuranceCompanyShare }}円</p>
+        <p>備考:{{ remarks }}</p>
     </div>
 </div>
+
+@if (isLoading) {
+    <div class="loading-overlay" aria-live="polite" aria-busy="true">
+        <div class="loading-modal">
+            <p>お待ちください</p>
+        </div>
+    </div>
+}

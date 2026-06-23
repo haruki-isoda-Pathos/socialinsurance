@@ -24,7 +24,10 @@ export class EmployeeRegisterModalComponent {
     joindate: string = '';
     resigndate?: string = '';
     employmenttype: string = '';
+    hasSideJob = false;
+    sideJobEmploymenttype = '';
     estincome: number | null = null;
+    sideJobEstincome: number | null = null;
     dependents: string = '';
     status: string = '';
     applicabledate: string = '';
@@ -41,7 +44,10 @@ export class EmployeeRegisterModalComponent {
             joindate: this.joindate,
             resigndate: this.resigndate,
             employmenttype: this.employmenttype,
+            hasSideJob: this.hasSideJob,
+            sideJobEmploymenttype: this.hasSideJob ? this.sideJobEmploymenttype : '',
             estincome: this.estincome,
+            sideJobEstincome: this.hasSideJob ? this.sideJobEstincome : null,
             dependents: this.dependents,
             status: this.status,
             applicabledate: this.applicabledate,
@@ -56,6 +62,12 @@ export class EmployeeRegisterModalComponent {
     
     onClose() {
         this.closeModal.emit();
+    }
+
+    onHasSideJobChange(): void {
+        if (!this.hasSideJob) {
+            this.sideJobEmploymenttype = '';
+        }
     }
 
 }

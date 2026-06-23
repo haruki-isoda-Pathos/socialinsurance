@@ -23,7 +23,10 @@ export class EmployeeEditModalComponent {
         joindate: '',
         resigndate: '',
         employmenttype: '',
+        hasSideJob: false,
+        sideJobEmploymenttype: '',
         estincome: null,
+        sideJobEstincome: null,
         dependents: '',
         status: '',   
         applicabledate: '',
@@ -36,6 +39,9 @@ export class EmployeeEditModalComponent {
             alert('退社予定日以外のすべての項目を入力して下さい');
             return;
         }
+        if (!this.employee.hasSideJob) {
+            this.employee.sideJobEmploymenttype = '';
+        }
         try {
             await this.employeeService.updateEmployee(this.employee as Employee);
             this.closeEditModal.emit();
@@ -46,6 +52,12 @@ export class EmployeeEditModalComponent {
 
     onClose(){
         this.closeEditModal.emit();
+    }
+
+    onHasSideJobChange(): void {
+        if (!this.employee.hasSideJob) {
+            this.employee.sideJobEmploymenttype = '';
+        }
     }
     
 }

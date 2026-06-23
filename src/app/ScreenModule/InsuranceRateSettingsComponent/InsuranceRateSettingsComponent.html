@@ -1,0 +1,70 @@
+<div class="rate-settings">
+    <h2>保険料率設定</h2>
+    <p class="description">
+        健康保険・介護保険・厚生年金の料率を設定します。適用開始年月以降の保険料計算に反映され、次回変更するまで保持されます。指定月より前の照会では、それ以前に保存された料率またはデフォルト料率が使われます。
+    </p>
+
+    <div class="form-container">
+        <form (ngSubmit)="onSave()">
+            <div class="form-group">
+                <label for="effectiveYearMonth">適用開始年月</label>
+                <input
+                    type="month"
+                    id="effectiveYearMonth"
+                    name="effectiveYearMonth"
+                    [(ngModel)]="effectiveYearMonth"
+                    (ngModelChange)="onEffectiveYearMonthChange()"
+                    required
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="healthPercent">健康保険料率（%）</label>
+                <input
+                    type="number"
+                    id="healthPercent"
+                    name="healthPercent"
+                    [(ngModel)]="healthPercent"
+                    step="0.01"
+                    min="0"
+                    required
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="nursingPercent">介護保険料率（%）</label>
+                <input
+                    type="number"
+                    id="nursingPercent"
+                    name="nursingPercent"
+                    [(ngModel)]="nursingPercent"
+                    step="0.01"
+                    min="0"
+                    required
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="pensionPercent">厚生年金保険料率（%）</label>
+                <input
+                    type="number"
+                    id="pensionPercent"
+                    name="pensionPercent"
+                    [(ngModel)]="pensionPercent"
+                    step="0.01"
+                    min="0"
+                    required
+                />
+            </div>
+
+            <div class="button-row">
+                <button type="submit">保存</button>
+                <button type="button" class="secondary" (click)="onReset()">デフォルトに戻す</button>
+            </div>
+        </form>
+    </div>
+
+    @if (savedMessage) {
+        <p class="saved-message">{{ savedMessage }}</p>
+    }
+</div>

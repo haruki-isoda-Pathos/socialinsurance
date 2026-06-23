@@ -54,7 +54,11 @@ export class EmployeeHomeComponent implements OnInit {
     }
 
     async onEditEmployee(employee: Employee) {
-        this.selectedEmployee = { ...employee };
+        this.selectedEmployee = {
+            ...employee,
+            hasSideJob: employee.hasSideJob ?? false,
+            sideJobEmploymenttype: employee.sideJobEmploymenttype ?? '',
+        };
         this.isEditModalOpen = true;
     }
 

@@ -6,7 +6,7 @@
             <label for="name">名前</label>
             <input type="text" id="name" name="name" placeholder="名前" [(ngModel)]="employee.name" required>
 
-            <label for="employeeId">従業員ID</label>
+            <label for="employeeId">従業員ID(メールアドレス)</label>
             <p>{{employee.employeeId}}&ensp;(※変更不可)</p>
 
             <label for="birthdate">生年月日</label>
@@ -27,12 +27,50 @@
               <option value="permanent">正社員</option>
               <option value="temporary">正社員でない要件充足者</option>
               <option value="short-term">特定適用事業所の短時間労働者</option>
-              <option value="short-term-2">2か月位以内短期雇用による社会保険無資格者</option>
+              <option value="short-term-2">2か月以内短期雇用(延長なし)による社会保険無資格者</option>
               <option value="other">その他</option>
             </select>
 
-            <label for="estincome">入社時見込み給付総額</label>
-            <input type="number" id="estincome" name="estincome" [(ngModel)]="employee.estincome" required>
+            <div class="checkbox-row">
+                <input
+                    type="checkbox"
+                    id="hasSideJob"
+                    name="hasSideJob"
+                    [(ngModel)]="employee.hasSideJob"
+                    (ngModelChange)="onHasSideJobChange()"
+                />
+                <label for="hasSideJob">
+                    副業従事の有無
+                    <span class="tooltip-container">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltip-text">副業の有無は、副業に従事しているか、でなく、副業先で社会保険の対象となっているかである。社会保険の対象となる者は、正社員、正社員の規定労働時間の3/4以上働いている者、そのほか51人以上の事業所で所定労働時間が週20時間以上、月収8.8万円以上の学生でない者である。</span>
+                    </span>
+                </label>
+            </div>
+
+            @if (employee.hasSideJob) {
+                <label for="sideJobEmploymenttype">副業先の雇用形態</label>
+                <select
+                    id="sideJobEmploymenttype"
+                    name="sideJobEmploymenttype"
+                    [(ngModel)]="employee.sideJobEmploymenttype"
+                    required
+                >
+                    <option value="permanent">正社員</option>
+                    <option value="temporary">正社員でない要件充足者</option>
+                    <option value="short-term">特定適用事業所の短時間労働者</option>
+                    <option value="short-term-2">2か月以内短期雇用(延長なし)による社会保険無資格者</option>
+                    <option value="other">その他</option>
+                </select>
+            }
+
+            <label for="estincome">入社時見込み給付総額（本業）</label>
+            <p class="readonly-value">{{ employee.estincome !== null ? employee.estincome : '未設定' }}円&ensp;(※変更不可)</p>
+
+            @if (employee.hasSideJob) {
+                <label for="sideJobEstincome">入社時見込み給付総額（副業）</label>
+                <p class="readonly-value">{{ employee.sideJobEstincome !== null ? employee.sideJobEstincome : '未設定' }}円&ensp;(※変更不可)</p>
+            }
 
             <label for="dependents">被扶養者（第三号被保険者）の該当</label>
             <select id="dependents" name="dependents" [(ngModel)]="employee.dependents" required>
@@ -45,11 +83,10 @@
               <option value="b-join">入社前</option>
               <option value="active1">従事中</option>
               <option value="active2">従事中（養育期間特例適用中）</option>
-              <option value="resigning">退職予定</option>
               <option value="resigned">退職</option>
               <option value="inactive">休職</option>
               <option value="inactive1">特別休職(育休)</option>
-              <option value="inactive2">特別休職(産休)</option>
+              <option value="inactive2">特別休職(産休)※退職期間特例適用中を含む</option>
               <option value="inactive3">特別休職(育休+産休)</option>
             </select>
 

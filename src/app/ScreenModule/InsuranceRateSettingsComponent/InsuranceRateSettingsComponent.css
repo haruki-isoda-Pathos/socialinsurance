@@ -1,0 +1,114 @@
+.rate-settings {
+    background-color: #ffffff;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 77, 77, 0.04);
+    max-width: 600px;
+}
+
+.rate-settings h2 {
+    color: #005a5b;
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 16px;
+    letter-spacing: 0.03em;
+    border-left: 4px solid #008080;
+    padding-left: 12px;
+}
+
+.rate-settings .description {
+    color: #2d4a43;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0 0 28px;
+}
+
+.rate-settings .form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.rate-settings .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.rate-settings label {
+    color: #2d4a43;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.rate-settings input[type='number'],
+.rate-settings input[type='month'] {
+    padding: 11px 14px;
+    font-size: 15px;
+    border: 1px solid #b2cfcb;
+    border-radius: 6px;
+    background-color: #fafdfd;
+    color: #2d4a43;
+    outline: none;
+    transition: all 0.2s ease;
+    max-width: 220px;
+    box-sizing: border-box;
+}
+
+.rate-settings input[type='number']:focus,
+.rate-settings input[type='month']:focus {
+    border-color: #008080;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.15);
+}
+
+.rate-settings .button-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.rate-settings button {
+    background-color: #008080;
+    color: #ffffff;
+    border: none;
+    padding: 11px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 128, 128, 0.15);
+    height: 44px;
+    box-sizing: border-box;
+}
+
+.rate-settings button:hover {
+    background-color: #006666;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(0, 128, 128, 0.25);
+}
+
+.rate-settings button.secondary {
+    background-color: #ffffff;
+    color: #005a5b;
+    border: 1px solid #b2cfcb;
+    box-shadow: none;
+}
+
+.rate-settings button.secondary:hover {
+    background-color: #f2f7f7;
+    transform: translateY(-1px);
+}
+
+.rate-settings .saved-message {
+    margin-top: 24px;
+    padding: 14px 18px;
+    background-color: #f2f7f7;
+    border-left: 4px solid #008080;
+    border-radius: 0 8px 8px 0;
+    color: #2d4a43;
+    font-size: 14px;
+}

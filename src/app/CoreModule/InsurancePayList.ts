@@ -185,6 +185,9 @@ export class InsurancePayList {
         const healthInsurance = Math.round(hReward * this.insuranceRateService.getHealthRate(yearMonth));
         const nursingInsurance = Math.round(hReward * this.insuranceRateService.getNursingRate(yearMonth));
         const welfarePension = Math.round(pReward * this.insuranceRateService.getPensionRate(yearMonth));
+        // #region agent log
+        fetch('http://127.0.0.1:7877/ingest/e924b3ce-ea66-46ab-93b9-b99a79ae1438',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'b88198'},body:JSON.stringify({sessionId:'b88198',location:'InsurancePayList.ts:calculateInsurancePremiumsWithGrade',message:'premiums calculated with rates',data:{yearMonth,monthlyReward,hReward,healthRate:this.insuranceRateService.getHealthRate(yearMonth),healthInsurance},timestamp:Date.now(),hypothesisId:'E'})}).catch(()=>{});
+        // #endregion
 
         const healthInsuranceHalf = Math.round(healthInsurance / 2);
         const nursingInsuranceHalf = Math.round(nursingInsurance / 2);

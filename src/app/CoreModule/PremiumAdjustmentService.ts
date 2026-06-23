@@ -187,7 +187,7 @@ export class PremiumAdjustmentService {
 
         const from70Month = this.getMilestoneMonth(birthdate, 70, true);
         if (yearMonth >= from70Month) {
-            remarkParts.push('任意継続選択時の保険料※本来厚生年金保険料は負担なし');
+            remarkParts.push('厚生年金任意継続選択時※70歳以降は原則労使負担なし');
         }
 
         const from75Month = this.getMilestoneMonth(birthdate, 75, false);

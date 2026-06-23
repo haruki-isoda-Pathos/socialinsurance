@@ -48,15 +48,22 @@ export class InsuranceRateService {
             .sort((a, b) => a.effectiveYearMonth.localeCompare(b.effectiveYearMonth));
 
         if (applicable.length === 0) {
+            // #region agent log
+            fetch('http://127.0.0.1:7877/ingest/e924b3ce-ea66-46ab-93b9-b99a79ae1438',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'b88198'},body:JSON.stringify({sessionId:'b88198',location:'InsuranceRateService.ts:getRatesForYearMonth',message:'no applicable entry, using defaults',data:{yearMonth,entryCount:this.entries.length,entries:this.entries.map(e=>e.effectiveYearMonth),result:DEFAULT_RATES},timestamp:Date.now(),hypothesisId:'B'})}).catch(()=>{});
+            // #endregion
             return { ...DEFAULT_RATES };
         }
 
         const latest = applicable[applicable.length - 1];
-        return {
+        const result = {
             healthRate: latest.healthRate,
             nursingRate: latest.nursingRate,
             pensionRate: latest.pensionRate,
         };
+        // #region agent log
+        fetch('http://127.0.0.1:7877/ingest/e924b3ce-ea66-46ab-93b9-b99a79ae1438',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'b88198'},body:JSON.stringify({sessionId:'b88198',location:'InsuranceRateService.ts:getRatesForYearMonth',message:'rate selected for yearMonth',data:{yearMonth,entryCount:this.entries.length,allEntries:this.entries.map(e=>({ym:e.effectiveYearMonth,h:e.healthRate})),selectedEffectiveYearMonth:latest.effectiveYearMonth,result},timestamp:Date.now(),hypothesisId:'A,C'})}).catch(()=>{});
+        // #endregion
+        return result;
     }
 
     getRatesAsPercent(yearMonth: string): {
@@ -101,6 +108,9 @@ export class InsuranceRateService {
         }
 
         this.persistToStorage();
+        // #region agent log
+        fetch('http://127.0.0.1:7877/ingest/e924b3ce-ea66-46ab-93b9-b99a79ae1438',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'b88198'},body:JSON.stringify({sessionId:'b88198',location:'InsuranceRateService.ts:saveRatesFromPercent',message:'rates saved',data:{effectiveYearMonth,healthPercent,nursingPercent,pensionPercent,totalEntries:this.entries.length},timestamp:Date.now(),hypothesisId:'D'})}).catch(()=>{});
+        // #endregion
     }
 
     resetToDefaults(): void {

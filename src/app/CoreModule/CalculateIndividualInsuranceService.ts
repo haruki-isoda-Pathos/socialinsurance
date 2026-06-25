@@ -90,9 +90,13 @@ export class CalculateIndividualInsuranceService {
 
     /**
      * 年3回以下の賞与分保険料を算出し、既算の月例保険料に加算する。
-     * ・1,000円未満切り捨て後ゼロになる場合はスキップ。
-     * ・標準賞与額への置き換えは行わず、切り捨て後の額に料率を直接乗算。
-     * ・端数処理：0.5以上切り上げ、0.5未満切り捨て。
+     *
+     * ① bonusPay がゼロなら即 return。
+     * ② 厚生年金：本副合算が 150万円超なら額面比率で本業分を按分。1,000円未満切り捨て→標準賞与額確定。
+     * ③ 健康保険：当会計年度（4月起算）の前月までの累計と当月を合算し 573万円超なら
+     *    残余枠を額面比率で按分。1,000円未満切り捨て→標準賞与額確定。
+     * ④ 介護保険：健康保険標準賞与額に料率を乗算。
+     * ⑤ 各保険料を加算（端数：0.5以上切り上げ、未満切り捨て）。
      */
     private applyBonusPremiums(yearMonth: string): void {
         const employee = this.premiumService.employeeAtMonthEnd;
@@ -101,24 +105,68 @@ export class CalculateIndividualInsuranceService {
         const currentPayment = this.premiumService.allPayments[yearMonth];
         if (!currentPayment) return;
 
-        const mainBonus = currentPayment.bonusPay ?? 0;
-        const sideBonus = employee.hasSideJob ? (currentPayment.sideJobBonusPay ?? 0) : 0;
-        const totalBonus = mainBonus + sideBonus;
+        // Step 1: bonusPay がゼロなら処理しない
+        const bonusPay = currentPayment.bonusPay ?? 0;
+        if (bonusPay === 0) return;
 
-        if (totalBonus === 0) return;
-
-        // 1,000円未満切り捨て
-        const bonusTruncated = Math.floor(totalBonus / 1000) * 1000;
-        if (bonusTruncated === 0) return;
+        // Step 2: sideJobBonusPay（副業ありの場合のみ参照、それ以外は0）
+        const sideJobBonusPay = employee.hasSideJob ? (currentPayment.sideJobBonusPay ?? 0) : 0;
+        const totalRaw = bonusPay + sideJobBonusPay;
 
         const rates = this.insuranceRateService.getRatesForYearMonth(yearMonth);
 
-        this.healthInsurance     += this.roundBonusPremium(bonusTruncated * rates.healthRate);
-        this.healthInsuranceHalf += this.roundBonusPremium(bonusTruncated * rates.healthRate / 2);
-        this.nursingInsurance     += this.roundBonusPremium(bonusTruncated * rates.nursingRate);
-        this.nursingInsuranceHalf += this.roundBonusPremium(bonusTruncated * rates.nursingRate / 2);
-        this.welfarePension       += this.roundBonusPremium(bonusTruncated * rates.pensionRate);
-        this.welfarePensionHalf   += this.roundBonusPremium(bonusTruncated * rates.pensionRate / 2);
+        // Step 3: 厚生年金標準賞与額（上限 150万円、超過時は額面比率で本業分を按分）
+        const PENSION_CAP = 1_500_000;
+        const pensionBase = totalRaw > PENSION_CAP
+            ? PENSION_CAP * (bonusPay / totalRaw)
+            : bonusPay;
+        const pensionStandardBonus = Math.floor(pensionBase / 1000) * 1000;
+
+        // Step 4: 健康保険標準賞与額（年度累計上限 573万円、4月起算）
+        const HEALTH_CAP = 5_730_000;
+        const prevCumulative = this.getPrevFiscalYearBonusCumulative(yearMonth);
+        let healthBase: number;
+        if (prevCumulative + totalRaw > HEALTH_CAP) {
+            const available = HEALTH_CAP - prevCumulative;
+            healthBase = available > 0 ? available * (bonusPay / totalRaw) : 0;
+        } else {
+            healthBase = bonusPay;
+        }
+        const healthStandardBonus = Math.floor(healthBase / 1000) * 1000;
+
+        // Step 5: 保険料算出・加算
+        if (pensionStandardBonus > 0) {
+            this.welfarePension     += this.roundBonusPremium(pensionStandardBonus * rates.pensionRate);
+            this.welfarePensionHalf += this.roundBonusPremium(pensionStandardBonus * rates.pensionRate / 2);
+        }
+        if (healthStandardBonus > 0) {
+            this.healthInsurance     += this.roundBonusPremium(healthStandardBonus * rates.healthRate);
+            this.healthInsuranceHalf += this.roundBonusPremium(healthStandardBonus * rates.healthRate / 2);
+        }
+        // 介護保険は健康保険標準賞与額を使用
+        if (healthStandardBonus > 0) {
+            this.nursingInsurance     += this.roundBonusPremium(healthStandardBonus * rates.nursingRate);
+            this.nursingInsuranceHalf += this.roundBonusPremium(healthStandardBonus * rates.nursingRate / 2);
+        }
+    }
+
+    /**
+     * 指定月の会計年度（4月起算）において、前月までの本副合算賞与累計額を返す。
+     * allPayments は 24 ヶ月分保持されているため、同一年度内の過去データはカバーできる。
+     */
+    private getPrevFiscalYearBonusCumulative(yearMonth: string): number {
+        const [year, month] = yearMonth.split('-').map(Number);
+        const fiscalYear = month >= 4 ? year : year - 1;
+        const fiscalStart = `${fiscalYear}-04`;
+        const allPayments = this.premiumService.allPayments;
+
+        let cumulative = 0;
+        for (const [ym, payment] of Object.entries(allPayments)) {
+            if (ym < fiscalStart) continue;   // 当年度開始より前
+            if (ym >= yearMonth) continue;    // 当月以降は除外
+            cumulative += (payment.bonusPay ?? 0) + (payment.sideJobBonusPay ?? 0);
+        }
+        return cumulative;
     }
 
     /** 0.5以上切り上げ、0.5未満切り捨て */

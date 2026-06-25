@@ -21,12 +21,24 @@ export class PremiumAdjustmentService {
     /**
      * 定時改定・随時改定・税率適用後の保険料に、
      * ステータス・退職日・扶養・年齢・雇用形態に基づく調整を適用する。
+     * 被扶養者（第三号被保険者）該当の場合は他の調整より優先し、保険料ゼロと備考のみ返す。
      */
     applyAdjustments(
         premiums: PremiumAmounts,
         employee: Employee,
         yearMonth: string,
     ): PremiumAdjustmentResult {
+        if (employee.dependents === 'yes') {
+            const adjusted: PremiumAmounts = { ...premiums };
+            this.zeroAllInsurances(adjusted);
+            return {
+                ...adjusted,
+                remarks: '第三号被保険者',
+                nursingInsuranceEmployeeShare: 0,
+                nursingInsuranceCompanyShare: 0,
+            };
+        }
+
         const adjusted: PremiumAmounts = { ...premiums };
         const remarkParts: string[] = [];
         let nursingEmployeeShare = adjusted.nursingInsuranceHalf;
@@ -34,7 +46,6 @@ export class PremiumAdjustmentService {
 
         this.applyStatusAdjustments(adjusted, employee);
         this.applyResignationAdjustments(adjusted, employee, yearMonth, remarkParts);
-        this.applyDependentAdjustments(adjusted, employee.dependents);
         this.applyAgeAdjustments(
             adjusted,
             employee.birthdate,
@@ -149,13 +160,6 @@ export class PremiumAdjustmentService {
         }
 
         if (isMidMonth && !isSameMonthJoinResign) {
-            this.zeroAllInsurances(adjusted);
-        }
-    }
-
-    /** ２．被扶養（第三号被保険者）による全額免除 */
-    private applyDependentAdjustments(adjusted: PremiumAmounts, dependents: string): void {
-        if (dependents === 'yes') {
             this.zeroAllInsurances(adjusted);
         }
     }

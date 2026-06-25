@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../CoreModule/AuthService';
 import { UserService } from '../../CoreModule/UserService';
-import { Router } from '@angular/router'
-import { Firestore, collection, query, where, getDocs } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
+import { FirebaseError } from '@angular/fire/app';
 
 @Component({
     selector:'app-initial-admin-setup',
@@ -23,7 +23,6 @@ export class InitialAdminSetupComponent{
     isPasswordMatch:boolean = true;
     
     constructor(
-        private firestore:Firestore,
         private authService:AuthService,
         private userService:UserService,
         private router:Router
@@ -33,35 +32,27 @@ export class InitialAdminSetupComponent{
         this.isPasswordMatch = this.password === this.confirmPassword;
     }
 
-    async existsEmployeeId(employeeId: string): Promise<boolean> {
-        const userRef = collection(this.firestore, 'users');
-        const q = query(
-          userRef,
-          where('employeeId', '==', employeeId)
-        );
-        const snapshot = await getDocs(q);
-        return !snapshot.empty;
-      }
-
     async onsubmit(){
         if (!this.isPasswordMatch){
             alert('パスワードが確認用のものと一致しません');
             return;
         }
 
-        const exists = await this.existsEmployeeId(this.employeeId);
-        if (exists){
-            alert('すでに存在しているユーザーです');
-            return;
+        try {
+            const user = await this.authService.registerAdmin(this.employeeId, this.password);
+            await this.userService.createAdminUser(
+                user.uid,
+                this.name,
+                this.employeeId
+            );
+            this.router.navigate(['/login']);
+        } catch (error) {
+            if (error instanceof FirebaseError && error.code === 'auth/email-already-in-use') {
+                alert('すでに存在しているユーザーです');
+                return;
+            }
+            alert('アカウント作成に失敗しました。入力内容を確認してください');
         }
-
-        const user = await this.authService.registerAdmin(this.employeeId,this.password);
-        await this.userService.createAdminUser(
-        user.uid,
-        this.name,
-        this.employeeId
-        );
-        this.router.navigate(['/login']);
     }
 
     onLogin(){

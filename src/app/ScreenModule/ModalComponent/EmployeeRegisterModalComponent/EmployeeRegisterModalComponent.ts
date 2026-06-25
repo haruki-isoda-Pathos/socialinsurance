@@ -30,7 +30,6 @@ export class EmployeeRegisterModalComponent {
     sideJobEstincome: number | null = null;
     dependents: string = '';
     status: string = '';
-    applicabledate: string = '';
 
     async onSubmit(f: NgForm) {
         if (f.invalid) {
@@ -50,7 +49,7 @@ export class EmployeeRegisterModalComponent {
             sideJobEstincome: this.hasSideJob ? this.sideJobEstincome : null,
             dependents: this.dependents,
             status: this.status,
-            applicabledate: this.applicabledate,
+            applicabledate: this.joindate,
         };
         try {
             await this.employeeService.createEmployee(newEmployee as Employee);

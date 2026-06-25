@@ -68,8 +68,14 @@
             <p class="readonly-value">{{ employee.estincome !== null ? employee.estincome : '未設定' }}円&ensp;(※変更不可)</p>
 
             @if (employee.hasSideJob) {
-                <label for="sideJobEstincome">入社時見込み給付総額（副業）</label>
-                <p class="readonly-value">{{ employee.sideJobEstincome !== null ? employee.sideJobEstincome : '未設定' }}円&ensp;(※変更不可)</p>
+                <label for="sideJobEstincome">入社時見込み給付総額（副業）※半角数字のみ入力</label>
+                <input
+                    type="number"
+                    id="sideJobEstincome"
+                    name="sideJobEstincome"
+                    [(ngModel)]="employee.sideJobEstincome"
+                    required
+                />
             }
 
             <label for="dependents">被扶養者（第三号被保険者）の該当</label>
@@ -80,7 +86,6 @@
 
             <label for="status">ステータス</label>
             <select id="status" name="status" [(ngModel)]="employee.status" required>
-              <option value="b-join">入社前</option>
               <option value="active1">従事中</option>
               <option value="active2">従事中（養育期間特例適用中）</option>
               <option value="resigned">退職</option>

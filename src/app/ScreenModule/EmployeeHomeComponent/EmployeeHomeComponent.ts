@@ -33,7 +33,6 @@ export class EmployeeHomeComponent implements OnInit {
     constructor(private cdr: ChangeDetectorRef) {}
 
     statusList: Record<string, string> = {
-        'b-join': '入社前',
         active1: '従事中',
         active2: '従事中（養育期間特例適用中）',
         resigning: '退職予定',

@@ -86,7 +86,6 @@
 
             <label for="status">ステータス</label>
             <select id="status" name="status" [(ngModel)]="status" required>
-              <option value="b-join">入社前</option>
               <option value="active1">従事中</option>
               <option value="active2">従事中（養育期間特例適用中）</option>
               <option value="resigned">退職</option>
@@ -96,8 +95,11 @@
               <option value="inactive3">特別休職(育休+産休)</option>
             </select>
 
-            <label for="applicabledate">上記内容の適用開始年月日</label>
-            <input type="date" id="applicabledate" name="applicabledate" [(ngModel)]="applicabledate" required>
+            <label for="applicabledate">
+                上記内容の適用開始年月日<br>
+                ※入社後の変更は編集にて行ってください
+            </label>
+            <p id="applicabledate" class="readonly-value">{{ joindate || '—' }}</p>
 
             <button type="submit">登録</button>
             <button type="button" (click)="onClose()">キャンセル</button>

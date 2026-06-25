@@ -41,6 +41,7 @@ export class EmployeeEditModalComponent {
         }
         if (!this.employee.hasSideJob) {
             this.employee.sideJobEmploymenttype = '';
+            this.employee.sideJobEstincome = null;
         }
         try {
             await this.employeeService.updateEmployee(this.employee as Employee);
@@ -57,6 +58,7 @@ export class EmployeeEditModalComponent {
     onHasSideJobChange(): void {
         if (!this.employee.hasSideJob) {
             this.employee.sideJobEmploymenttype = '';
+            this.employee.sideJobEstincome = null;
         }
     }
     

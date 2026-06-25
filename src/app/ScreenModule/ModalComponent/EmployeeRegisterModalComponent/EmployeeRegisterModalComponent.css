@@ -62,6 +62,18 @@
   .modal-content form label:first-of-type {
     margin-top: 0;
   }
+
+  .modal-content form .readonly-value {
+    margin: 0;
+    padding: 11px 14px;
+    font-size: 15px;
+    background-color: #f0f4f4;
+    color: #667a75;
+    border: 1px solid #ccd9d7;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-weight: 500;
+  }
   
   /* ─── 入力コントロール共通（インプット・セレクト） ─── */
   .modal-content form input[type="text"],

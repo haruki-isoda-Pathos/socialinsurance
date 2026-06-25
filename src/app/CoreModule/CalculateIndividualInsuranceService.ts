@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PremiumService } from './PremiumService';
 import { InsurancePayList } from './InsurancePayList';
+import { InsuranceRateService } from './InsuranceRateService';
 import { PremiumAdjustmentService } from './PremiumAdjustmentService';
 import { InsurancePremiumsWithGrade } from '../ModelModule/InsurancePremiumsModel';
 import { Payment } from '../ModelModule/PaymentModel';
@@ -31,6 +32,7 @@ export class CalculateIndividualInsuranceService {
     constructor(
         private premiumService: PremiumService,
         private insurancePayList: InsurancePayList,
+        private insuranceRateService: InsuranceRateService,
         private premiumAdjustmentService: PremiumAdjustmentService,
     ) {}
 
@@ -78,7 +80,51 @@ export class CalculateIndividualInsuranceService {
             this.applyMainJobProration();
         }
 
+        this.applyBonusPremiums(yearMonth);
         this.applyPremiumAdjustments(yearMonth);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 賞与保険料（年3回以下賞与）
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /**
+     * 年3回以下の賞与分保険料を算出し、既算の月例保険料に加算する。
+     * ・1,000円未満切り捨て後ゼロになる場合はスキップ。
+     * ・標準賞与額への置き換えは行わず、切り捨て後の額に料率を直接乗算。
+     * ・端数処理：0.5以上切り上げ、0.5未満切り捨て。
+     */
+    private applyBonusPremiums(yearMonth: string): void {
+        const employee = this.premiumService.employeeAtMonthEnd;
+        if (!employee) return;
+
+        const currentPayment = this.premiumService.allPayments[yearMonth];
+        if (!currentPayment) return;
+
+        const mainBonus = currentPayment.bonusPay ?? 0;
+        const sideBonus = employee.hasSideJob ? (currentPayment.sideJobBonusPay ?? 0) : 0;
+        const totalBonus = mainBonus + sideBonus;
+
+        if (totalBonus === 0) return;
+
+        // 1,000円未満切り捨て
+        const bonusTruncated = Math.floor(totalBonus / 1000) * 1000;
+        if (bonusTruncated === 0) return;
+
+        const rates = this.insuranceRateService.getRatesForYearMonth(yearMonth);
+
+        this.healthInsurance     += this.roundBonusPremium(bonusTruncated * rates.healthRate);
+        this.healthInsuranceHalf += this.roundBonusPremium(bonusTruncated * rates.healthRate / 2);
+        this.nursingInsurance     += this.roundBonusPremium(bonusTruncated * rates.nursingRate);
+        this.nursingInsuranceHalf += this.roundBonusPremium(bonusTruncated * rates.nursingRate / 2);
+        this.welfarePension       += this.roundBonusPremium(bonusTruncated * rates.pensionRate);
+        this.welfarePensionHalf   += this.roundBonusPremium(bonusTruncated * rates.pensionRate / 2);
+    }
+
+    /** 0.5以上切り上げ、0.5未満切り捨て */
+    private roundBonusPremium(value: number): number {
+        const fraction = value - Math.floor(value);
+        return fraction >= 0.5 ? Math.ceil(value) : Math.floor(value);
     }
 
     // ─────────────────────────────────────────────────────────────────────────

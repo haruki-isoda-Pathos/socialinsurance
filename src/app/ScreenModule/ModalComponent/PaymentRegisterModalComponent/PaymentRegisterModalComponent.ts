@@ -23,10 +23,12 @@ export class PaymentRegisterModalComponent {
         networkDay: 0,
         fixedPay: 0,
         currentPay: 0,
+        bonusPay: 0,
         sidejobincome: false,
         sideJobNetworkDay: 0,
         sideJobFixedPay: 0,
         sideJobCurrentPay: 0,
+        sideJobBonusPay: 0,
     }
 
     private paymentService = inject(PaymentService) 
@@ -41,11 +43,13 @@ export class PaymentRegisterModalComponent {
             yearMonth: this.payment.yearMonth,
             fixedPay: this.payment.fixedPay,
             currentPay: this.payment.currentPay,
+            bonusPay: this.payment.bonusPay ?? 0,
             networkDay: this.payment.networkDay,
             sidejobincome: this.payment.sidejobincome,
             sideJobNetworkDay: this.payment.sideJobNetworkDay,
             sideJobFixedPay: this.payment.sideJobFixedPay,
             sideJobCurrentPay: this.payment.sideJobCurrentPay,
+            sideJobBonusPay: this.payment.sidejobincome ? (this.payment.sideJobBonusPay ?? 0) : 0,
         };
         try {
             await this.paymentService.registerPayment(payment);

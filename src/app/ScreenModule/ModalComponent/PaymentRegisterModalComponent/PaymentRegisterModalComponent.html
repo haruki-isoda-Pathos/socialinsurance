@@ -20,13 +20,16 @@
             <input type="number" id="fixedPay" name="fixedPay" [(ngModel)]="payment.fixedPay" required>
 
             <label for="currentPay">
-                非固定的給与計（本業）※半角数字のみ入力
+                非固定的給与計（本業）<br>※年3回以下の賞与除く・半角数字のみ入力
                 <span class="tooltip-container">
                     <span class="tooltip-icon">?</span>
                     <span class="tooltip-text">健保法43条、健保則4条、厚年法23条、昭和36年通達による、固定的賃金に含まれない支給項目の総計。(基本給、就業規則上の役職手当、固定残業代など)</span>
                 </span>
             </label>
             <input type="number" id="currentPay" name="currentPay" [(ngModel)]="payment.currentPay" required>
+
+            <label for="bonusPay">年3回以下賞与の当月支給額（本業）※半角数字・なければゼロ</label>
+            <input type="number" id="bonusPay" name="bonusPay" [(ngModel)]="payment.bonusPay" required>
 
             <div class="checkbox-container">
                 <input type="checkbox" id="sidejobincome" name="sidejobincome" [(ngModel)]="payment.sidejobincome">
@@ -53,13 +56,16 @@
                 <input type="number" id="sideJobFixedPay" name="sideJobFixedPay" [(ngModel)]="payment.sideJobFixedPay" [required]="payment.sidejobincome">
 
                 <label for="sideJobCurrentPay">
-                    非固定的給与計（副業）※半角数字のみ入力
+                    非固定的給与計（副業）※年3回以下の賞与除く・半角数字のみ入力
                     <span class="tooltip-container">
                         <span class="tooltip-icon">?</span>
                         <span class="tooltip-text">健保法43条、健保則4条、厚年法23条、昭和36年通達による、固定的賃金に含まれない支給項目の総計。(基本給、就業規則上の役職手当、固定残業代など)</span>
                     </span>
                 </label>
                 <input type="number" id="sideJobCurrentPay" name="sideJobCurrentPay" [(ngModel)]="payment.sideJobCurrentPay" [required]="payment.sidejobincome">
+
+                <label for="sideJobBonusPay">年3回以下賞与の当月支給額（副業）※半角数字・なければゼロ</label>
+                <input type="number" id="sideJobBonusPay" name="sideJobBonusPay" [(ngModel)]="payment.sideJobBonusPay" [required]="payment.sidejobincome">
             </ng-container>
         
             <button type="submit">登録</button>

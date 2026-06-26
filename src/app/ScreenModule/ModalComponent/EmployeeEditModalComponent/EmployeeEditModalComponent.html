@@ -64,11 +64,11 @@
                 </select>
             }
 
-            <label for="estincome">入社時見込み給付総額（本業）</label>
+            <label for="estincome">入社時見込み給付総額（月額・本業）</label>
             <p class="readonly-value">{{ employee.estincome !== null ? employee.estincome : '未設定' }}円&ensp;(※変更不可)</p>
 
             @if (employee.hasSideJob) {
-                <label for="sideJobEstincome">入社時見込み給付総額（副業）※半角数字のみ入力</label>
+                <label for="sideJobEstincome">入社時見込み給付総額（月額・副業）※半角数字のみ入力</label>
                 <input
                     type="number"
                     id="sideJobEstincome"
